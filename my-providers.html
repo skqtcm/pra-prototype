@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRM — My Providers (D365 Prototype)</title>
+  <link rel="stylesheet" href="d365-ui-kit.css">
+  <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css">
+  <style>
+    .ms-Icon { font-size: 16px; }
+    .d365-header__action-btn .ms-Icon { font-size: 16px; line-height: 1; }
+    .d365-command-bar__btn .ms-Icon { font-size: 16px; line-height: 1; vertical-align: middle; }
+  </style>
+</head>
+<body>
+
+<div class="d365-app" id="app"></div>
+
+<script src="js/pra-data.js"></script>
+<script src="js/d365-app.js"></script>
+<script>
+renderShell('my-providers');
+
+var main = document.getElementById('main-content');
+main.innerHTML = `
+  ${renderOverdueBanner()}
+  <div class="d365-command-bar">
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Back"></i></button>
+    <div class="d365-command-bar__divider"></div>
+    <button class="d365-command-bar__btn d365-command-bar__btn--primary"><i class="ms-Icon ms-Icon--Add"></i> New Provider</button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Delete"></i> Delete</button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Refresh"></i> Refresh</button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--More"></i></button>
+    <div class="d365-command-bar__spacer"></div>
+    <button class="d365-command-bar__btn d365-command-bar__btn--share"><i class="ms-Icon ms-Icon--Share"></i> Share</button>
+  </div>
+
+  <div class="d365-view-card">
+    <div class="d365-view-header">
+      <div class="d365-view-header__title">
+        My Providers
+        <span class="d365-view-header__chevron"><span style="font-family:FabricMDL2Icons;font-size:16px;">&#xe70d;</span></span>
+      </div>
+      <div class="d365-view-header__actions">
+        <button class="d365-view-header__action"><i class="ms-Icon ms-Icon--TripleColumn"></i> Edit columns</button>
+        <button class="d365-view-header__action"><i class="ms-Icon ms-Icon--Filter"></i> Edit filters</button>
+      </div>
+    </div>
+
+    <div class="d365-toolbar">
+      <div class="d365-toolbar__search">
+        <input type="text" id="prov-search" placeholder="Search providers...">
+      </div>
+      <select class="d365-select" id="filter-prov-status">
+        <option value="All">Status: All</option>
+        <option value="Active">Active</option>
+        <option value="Pending">Pending</option>
+        <option value="Inactive">Inactive</option>
+      </select>
+      <div class="d365-toolbar__spacer"></div>
+      <span class="d365-toolbar__count"></span>
+    </div>
+
+    <div class="d365-grid">
+      <table id="providers-table">
+        <thead><tr></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="d365-grid__footer">
+      <span class="d365-grid__row-count">Rows: ${PRA_DATA.providers.length}</span>
+      <div class="d365-grid__pagination">
+        <button disabled>⟨⟨</button><button disabled>⟨</button>
+        <span>Page 1</span>
+        <button disabled>⟩</button><button disabled>⟩⟩</button>
+      </div>
+    </div>
+  </div>
+`;
+
+initTable('providers-table', {
+  data: PRA_DATA.providers,
+  columns: [
+    { key: 'name', label: 'Provider Name', sortable: true,
+      render: function(row) { return '<a href="provider-dashboard.html?id=' + row.id + '">' + titleCase(row.name) + '</a>'; } },
+    { key: 'specialty', label: 'Specialty', sortable: true },
+    { key: 'facility', label: 'Practice / Facility', sortable: true },
+    { key: 'city', label: 'City', sortable: true },
+    { key: 'state', label: 'State', sortable: true },
+    { key: 'status', label: 'Status', sortable: true,
+      render: function(row) { return statusBadge(row.status); } },
+    { key: 'overallScore', label: 'Score', sortable: true,
+      render: function(row) { return '<strong>' + row.overallScore + '</strong> ' + trendArrow(row.scoreTrend); } },
+    { key: 'lastContact', label: 'Last Contact', sortable: true,
+      render: function(row) { return formatDate(row.lastContact); } },
+    { key: 'nextFollowUp', label: 'Next Follow-Up', sortable: true,
+      render: function(row) { return formatDate(row.nextFollowUp); } }
+  ],
+  searchInputId: 'prov-search',
+  filters: [
+    { id: 'filter-prov-status', key: 'status' }
+  ],
+  onRowClick: function(row) {
+    window.location.href = 'provider-dashboard.html?id=' + row.id;
+  }
+});
+</script>
+
+</body>
+</html>

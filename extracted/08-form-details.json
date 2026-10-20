@@ -1,0 +1,22 @@
+{
+  "subGridSection": null,
+  "timelineArea": null,
+  "formBody": {
+    "tag": "DIV",
+    "text": "Read-only: You don't have access to edit this record. Press Alt + B to navigate",
+    "backgroundColor": "rgb(250, 250, 250)",
+    "color": "rgb(36, 36, 36)",
+    "fontSize": "14px",
+    "fontWeight": "400",
+    "lineHeight": "normal",
+    "padding": "0px",
+    "height": "481.323px",
+    "borderBottom": "0px none rgb(36, 36, 36)",
+    "margin": "0px",
+    "overflow": "hidden"
+  },
+  "_fieldContainerCount": 0,
+  "_sectionHeaderCount": 0,
+  "businessProcessBar": null,
+  "_twoColCount": 0
+}

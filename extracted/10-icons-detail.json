@@ -1,0 +1,455 @@
+{
+  "iconFonts": [
+    "FabricMDL2Icons",
+    "ShellFabricMDL2IconsLite",
+    "ShellFabricMDL2Icons",
+    "FSI-FluentUIIcons"
+  ],
+  "icons": [
+    {
+      "fontFamily": "ShellFabricMDL2IconsLite, ShellFabricMDL2Icons",
+      "charCode": "f4e0",
+      "ariaLabel": "App launcher",
+      "title": "App launcher",
+      "className": "ms-Icon--WaffleOffice365 ms-icon-font-size-16",
+      "fontSize": "16px",
+      "tag": "SPAN"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "ea80",
+      "ariaLabel": "Assistant\n\nStay on top of your day with notifications and in",
+      "title": "Assistant\n\nStay on top of your day with notifications and in",
+      "className": "symbolFont RelationshipAssistant-symbol pa-ek pa-dx ",
+      "fontSize": "16px",
+      "tag": "SPAN"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "e710",
+      "ariaLabel": "New\n\nCreate a new record",
+      "title": "New\n\nCreate a new record",
+      "className": "symbolFont New-symbol pa-ek pa-dx ",
+      "fontSize": "16px",
+      "tag": "SPAN"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "e71c",
+      "ariaLabel": "Advanced Find\n\nCreate advanced search queries. Press enter t",
+      "title": "Advanced Find\n\nCreate advanced search queries. Press enter t",
+      "className": "symbolFont AdvFind-symbol pa-ek pa-dx ",
+      "fontSize": "16px",
+      "tag": "SPAN"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "ea8f",
+      "ariaLabel": "Notifications\n\nView notifications",
+      "title": "Notifications\n\nView notifications",
+      "className": "symbolFont ReminderWithCall-symbol pa-ek pa-dx ",
+      "fontSize": "16px",
+      "tag": "SPAN"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "e713",
+      "ariaLabel": "Settings\n\nSet up personal options and view privacy statement",
+      "title": "Settings\n\nSet up personal options and view privacy statement",
+      "className": "symbolFont Settings-symbol pa-ek pa-dx ",
+      "fontSize": "16px",
+      "tag": "SPAN"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "e897",
+      "ariaLabel": "Help\n\nFind help and training.",
+      "title": "Help\n\nFind help and training.",
+      "className": "symbolFont Help-symbol pa-ek pa-dx ",
+      "fontSize": "16px",
+      "tag": "SPAN"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "e77b",
+      "ariaLabel": "User Information\n\nView name of currently signed-in user.",
+      "title": "User Information\n\nView name of currently signed-in user.",
+      "className": "symbolFont MembersIcon-symbol pa-ek pa-dx ",
+      "fontSize": "16px",
+      "tag": "SPAN"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "e700",
+      "ariaLabel": "Site Map",
+      "title": "Site Map",
+      "className": "symbolFont SiteMap-symbol  ",
+      "fontSize": "16px",
+      "tag": "SPAN"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "e80f",
+      "ariaLabel": "Home",
+      "title": "Go to home page",
+      "className": "symbolFont Home-symbol pa-dx pa-ek pa-en pa-eo ",
+      "fontSize": "16px",
+      "tag": "SPAN"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "e823",
+      "ariaLabel": "Recent",
+      "title": "Recent items",
+      "className": "symbolFont Recent-symbol pa-dx pa-ek pa-en pa-eo ",
+      "fontSize": "16px",
+      "tag": "SPAN"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "e70d",
+      "ariaLabel": "Recent",
+      "title": "Recent items",
+      "className": "symbolFont ChevronDown-symbol pa-dx pa-ek pa-cr ",
+      "fontSize": "16px",
+      "tag": "SPAN"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "e840",
+      "ariaLabel": "Pinned",
+      "title": "Pinned items",
+      "className": "symbolFont Pinned-symbol pa-dx pa-ek pa-en pa-eo ",
+      "fontSize": "16px",
+      "tag": "SPAN"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "e70e",
+      "ariaLabel": "Dashboards & Activities",
+      "title": "Dashboards & Activities",
+      "className": "symbolFont ChevronUp-symbol pa-dx pa-ek pa-cr ",
+      "fontSize": "16px",
+      "tag": "SPAN"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "ec8f",
+      "ariaLabel": "Workplace (change area)",
+      "title": "Workplace (change area)",
+      "className": "pa-cr pa-jm pa-jn pa-dx pa-iy pa-jk pa-ci pa-jo pa-bg symbolFont AreaSwitcher-symbol ",
+      "fontSize": "16px",
+      "tag": "SPAN"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "e72b",
+      "ariaLabel": "Press Enter to go back.",
+      "title": "Go back",
+      "className": "pa-fh pa-fs pa-o pa-ft pa-ax pa-fu pa-fv pa-fw pa-dz pa-ex pa-fx pa-w pa-ci pa-cc pa-fy pa-fz pa-ga ",
+      "fontSize": "14px",
+      "tag": "BUTTON"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "effe",
+      "ariaLabel": "Run Report\n\nSelect a report to run.  \n\nRun reports on record",
+      "title": "Run Report\n\nSelect a report to run.  \n\nRun reports on record",
+      "className": "symbolFont Report-symbol pa-hr pa-ek pa-ci pa-dx pa-cr ",
+      "fontSize": "16px",
+      "tag": "SPAN"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "e711",
+      "ariaLabel": "Close Fullscreen Control button",
+      "title": "Close Fullscreen Control button",
+      "className": "symbolFont Close-symbol pa-cr pa-cx pa-a pa-br pa-d pa-bs pa-nx pa-rl pa-dz pa-mx pa-cc ",
+      "fontSize": "16px",
+      "tag": "SPAN"
+    },
+    {
+      "fontFamily": "\"Dyn CRM Symbol\"",
+      "charCode": "e8d4",
+      "ariaLabel": "Call Info",
+      "title": "To",
+      "className": "crmSymbolFont entity-symbol Contact pa-qz ",
+      "fontSize": "14px",
+      "tag": "SPAN"
+    }
+  ],
+  "iconCount": 19,
+  "svgIcons": [
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "16",
+      "height": "16",
+      "viewBox": "0 0 16 16"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 512 512"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 512 512"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "16",
+      "height": "16",
+      "viewBox": "0 0 16 16"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": null,
+      "height": null,
+      "viewBox": "0 0 122.88 100.58"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": null,
+      "height": null,
+      "viewBox": "0 0 117.91 122.88"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 47 47"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 299.594 299.594"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 24 24"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 32 32"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 32 32"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 24 24"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 512 512"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 512.002 512.002"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 24 24"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 485 485"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "32px",
+      "height": "32px",
+      "viewBox": "0 0 30 30"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 485 485"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 490 490"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 512 512"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 24 24"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": null,
+      "height": null,
+      "viewBox": "0 0 117.91 122.88"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 512 512"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 24 24"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 48 48"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 502 502"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 511 511"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": "800px",
+      "height": "800px",
+      "viewBox": "0 0 48 48"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": null,
+      "height": null,
+      "viewBox": "0 0 490 490"
+    },
+    {
+      "ariaLabel": "",
+      "title": "",
+      "svgClass": "pa-dx pa-ek pa-en pa-eo ",
+      "parentClass": "pa-ci pa-dj pa-dx pa-dy pa-dz pa-cr pa-g pa-w pa-bm svgIcon ",
+      "width": null,
+      "height": null,
+      "viewBox": "0 0 512 512"
+    }
+  ],
+  "svgCount": 37
+}

@@ -1,0 +1,161 @@
+{
+  "allButtons": [
+    {
+      "text": "",
+      "ariaLabel": "App launcher",
+      "dataId": null,
+      "id": "O365_MainLink_NavMenu"
+    },
+    {
+      "text": "",
+      "ariaLabel": "Assistant\n\nStay on top of your day with notifications and insights about what's new and what's due.",
+      "dataId": "cardFeedContainerLauncher",
+      "id": "cardFeedContainerLauncher-button"
+    },
+    {
+      "text": "",
+      "ariaLabel": "New\n\nCreate a new record",
+      "dataId": "quickCreateLauncher",
+      "id": "quickCreateLauncher-button"
+    },
+    {
+      "text": "",
+      "ariaLabel": "Advanced Find\n\nCreate advanced search queries. Press enter to open in new window.",
+      "dataId": "advancedFindLauncher",
+      "id": "advancedFindLauncher-button"
+    },
+    {
+      "text": "",
+      "ariaLabel": "Notifications\n\nView notifications",
+      "dataId": "appNotificationCenterContainerLauncher",
+      "id": "appNotificationCenterContainerLauncher-button"
+    },
+    {
+      "text": "",
+      "ariaLabel": "Settings\n\nSet up personal options and view privacy statement.",
+      "dataId": "personalSettingsLauncher",
+      "id": "personalSettingsLauncher-button"
+    },
+    {
+      "text": "",
+      "ariaLabel": "Help\n\nFind help and training.",
+      "dataId": "helpLauncher",
+      "id": "helpLauncher-button"
+    },
+    {
+      "text": "",
+      "ariaLabel": "User Information\n\nView name of currently signed-in user.",
+      "dataId": "userInformationLauncher",
+      "id": "userInformationLauncher_buttoncrm_header_global_me-control$button"
+    },
+    {
+      "text": "",
+      "ariaLabel": "Site Map",
+      "dataId": "navbutton",
+      "id": "id-2"
+    },
+    {
+      "text": "WWorkplace",
+      "ariaLabel": "Workplace (change area)",
+      "dataId": "sitemap-areaSwitcher-expand-btn",
+      "id": "areaSwitcherId"
+    },
+    {
+      "text": "",
+      "ariaLabel": "Press Enter to go back.",
+      "dataId": "navigateBackButtontab-id-0",
+      "id": "navigateBackButtontab-id-0"
+    },
+    {
+      "text": "Focused view",
+      "ariaLabel": "Focused view",
+      "dataId": "changeVisualization-MscrmControls.AcceleratedSales.AnchorShellGridControl--1",
+      "id": "changeVisualization-MscrmControls.AcceleratedSales.AnchorShellGridControl--1-but"
+    },
+    {
+      "text": "Show Chart",
+      "ariaLabel": "Show Chart",
+      "dataId": "ShowChartPane",
+      "id": "ShowChartPane-button"
+    },
+    {
+      "text": "Task",
+      "ariaLabel": "Task",
+      "dataId": "activitypointer|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.activitypointer.NewTask",
+      "id": "activitypointer|NoRelationship|HomePageGrid|Mscrm.CreateTask20-button"
+    },
+    {
+      "text": "Email",
+      "ariaLabel": "Email",
+      "dataId": "activitypointer|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.activitypointer.NewEmail",
+      "id": "activitypointer|NoRelationship|HomePageGrid|Mscrm.CreateEmail30-button"
+    },
+    {
+      "text": "Appointment",
+      "ariaLabel": "Appointment",
+      "dataId": "activitypointer|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.activitypointer.NewAppointment.modern.Appointment",
+      "id": "activitypointer|NoRelationship|HomePageGrid|Mscrm.modern.CreateAppointment40-but"
+    },
+    {
+      "text": "Recruitment Phone Call",
+      "ariaLabel": "Recruitment Phone Call",
+      "dataId": "activitypointer|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.activitypointer.NewPhone",
+      "id": "activitypointer|NoRelationship|HomePageGrid|Mscrm.CreatePhoneCall50-button"
+    },
+    {
+      "text": "",
+      "ariaLabel": "More commands for Activity",
+      "dataId": "OverflowButton",
+      "id": "OverflowButton_button0_prm_pracall$button"
+    },
+    {
+      "text": "Share",
+      "ariaLabel": "Share",
+      "dataId": null,
+      "id": "collaborationShareButton_0"
+    },
+    {
+      "text": "All PRA CallsOpen popup to change view.",
+      "ariaLabel": "All PRA Calls",
+      "dataId": "ViewSelector_7ae64a54-88a0-4627-910b-9f0ba02da68f",
+      "id": "ViewSelector_0_7ae64a54-88a0-4627-910b-9f0ba02da68f"
+    },
+    {
+      "text": "Edit columnsEdit the view by adding, removing or ",
+      "ariaLabel": "Edit columns",
+      "dataId": null,
+      "id": "columnEditor-btn"
+    },
+    {
+      "text": "Edit filtersEdit the view with advanced filter qu",
+      "ariaLabel": "Edit filters",
+      "dataId": null,
+      "id": "open-advanced-filter"
+    },
+    {
+      "text": "",
+      "ariaLabel": "Due",
+      "dataId": null,
+      "id": ""
+    }
+  ],
+  "gridRoot": {
+    "border": "0px none rgb(0, 0, 0)",
+    "borderBottom": "0px none rgb(0, 0, 0)",
+    "outline": "rgb(0, 0, 0) none 0px"
+  },
+  "rowBottomBorder": "rgb(0, 0, 0)",
+  "rowBottomBorderWidth": "0px",
+  "rowBottomBorderStyle": "none",
+  "agThemeClass": "ag-theme-balham container-191",
+  "agThemeVars": {
+    "rowBorderColor": "rgba(189, 195, 199, 0.58)",
+    "borderColor": "#bdc3c7",
+    "headerBg": "#f5f7f7",
+    "oddRowBg": "#fcfdfe",
+    "selectedRowBg": "rgba(0, 145, 234, 0.28)",
+    "rangeSel": "rgba(0, 145, 234, 0.2)",
+    "fontSize": "12px",
+    "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen-Sans, Ubuntu, Cantarell, \"Helvetica Neue\", sans-serif"
+  }
+}

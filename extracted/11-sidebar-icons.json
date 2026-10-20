@@ -1,0 +1,30 @@
+{
+  "extractedFrom": "D365 PRM UAT via Chrome DevTools console (2026-10-15)",
+  "svgIcons": {
+    "All Activities": { "source": "/_imgs/svg_4200.svg", "viewBox": "0 0 16 16", "title": "ActivityPointer_EFF4" },
+    "PR Tasks": { "source": "/WebResources/prm_prtasksicon", "viewBox": "0 0 512 512", "title": "tasks-all" },
+    "TPL Phone Calls": { "source": "/WebResources/prm_tplphoneicon", "viewBox": "0 0 512 512" },
+    "Power BI": { "source": "/WebResources/cc_MscrmControls.PowerBIPCFControl/images/powerbi_icon.svg", "viewBox": "0 0 96 96", "note": "Uses gradient fills, not currentColor" },
+    "Reports": { "source": "/_imgs/svg_9100.svg", "viewBox": "0 0 2048 2048", "title": "Report_EFFE", "note": "transform scale(1,-1)" },
+    "Legacy Advanced Find": { "source": "/WebResources/msdyn_/Analytics/imgs/KnowledgeSearchIcon.svg", "viewBox": "0 0 2048 2048" },
+    "Reporting": { "note": "Same SVG as Legacy Advanced Find (KnowledgeSearchIcon.svg)" },
+    "Dashboards & Activities": { "note": "Same SVG as All Activities (ActivityPointer_EFF4)" }
+  },
+  "fontIcons": {
+    "Home": { "fontFamily": "Dyn CRM Symbol", "note": "Using Fabric ms-Icon--Home as substitute" },
+    "Recent": { "fontFamily": "Dyn CRM Symbol", "note": "Using Fabric ms-Icon--Recent as substitute" },
+    "Pinned": { "fontFamily": "Dyn CRM Symbol", "note": "Using Fabric ms-Icon--Pinned as substitute" },
+    "Collateral": { "fontFamily": "Dyn CRM Symbol", "note": "Section header, no child icon needed" },
+    "Provider Related": { "fontFamily": "Dyn CRM Symbol", "note": "Section header, no child icon needed" },
+    "Requests/Tickets": { "fontFamily": "Dyn CRM Symbol", "note": "Section header, no child icon needed" },
+    "Work": { "fontFamily": "Dyn CRM Symbol", "note": "Section header, no child icon needed" }
+  },
+  "savedFiles": [
+    "assets/icons/all-activities.svg",
+    "assets/icons/pr-tasks.svg",
+    "assets/icons/tpl-phone-calls.svg",
+    "assets/icons/power-bi.svg",
+    "assets/icons/reports.svg",
+    "assets/icons/advanced-find.svg"
+  ]
+}

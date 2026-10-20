@@ -1,0 +1,105 @@
+{
+  "svg": {
+    "ActivityPointer_EFF4": {
+      "region": "sidebar",
+      "title": "ActivityPointer_EFF4",
+      "source": "/_imgs/svg_4200.svg",
+      "viewBox": "0 0 16 16",
+      "usedFor": "All Activities, Dashboards & Activities",
+      "savedAs": "assets/icons/all-activities.svg"
+    },
+    "tasks-all": {
+      "region": "sidebar",
+      "title": "tasks-all",
+      "source": "/WebResources/prm_prtasksicon",
+      "viewBox": "0 0 512 512",
+      "usedFor": "PR Tasks",
+      "savedAs": "assets/icons/pr-tasks.svg"
+    },
+    "TPL Phone Calls": {
+      "region": "sidebar",
+      "title": "TPL Phone Calls",
+      "source": "/WebResources/prm_tplphoneicon",
+      "viewBox": "0 0 512 512",
+      "usedFor": "TPL Phone Calls",
+      "savedAs": "assets/icons/tpl-phone-calls.svg"
+    },
+    "Legacy Advanced Find": {
+      "region": "sidebar",
+      "title": "Legacy Advanced Find",
+      "source": "/WebResources/msdyn_/Analytics/imgs/KnowledgeSearchIcon.svg",
+      "viewBox": "0 0 2048 2048",
+      "usedFor": "Legacy Advanced Find, Reporting section",
+      "savedAs": "assets/icons/advanced-find.svg"
+    },
+    "Power BI": {
+      "region": "sidebar",
+      "title": "Power BI",
+      "source": "/WebResources/cc_MscrmControls.PowerBIPCFControl/images/powerbi_icon.svg",
+      "viewBox": "0 0 96 96",
+      "usedFor": "Power BI",
+      "note": "Gradient fills, not currentColor",
+      "savedAs": "assets/icons/power-bi.svg"
+    },
+    "Report_EFFE": {
+      "region": "sidebar",
+      "title": "Report_EFFE",
+      "source": "/_imgs/svg_9100.svg",
+      "viewBox": "0 0 2048 2048",
+      "usedFor": "Reports",
+      "note": "transform scale(1,-1)",
+      "savedAs": "assets/icons/reports.svg"
+    },
+    "ShareAndroid_filled": {
+      "region": "other",
+      "viewBox": "0 0 20 20",
+      "usedFor": "Share button (filled state)",
+      "note": "Fluent UI v2 icon",
+      "savedAs": "assets/icons/share-filled.svg"
+    },
+    "ShareAndroid_regular": {
+      "region": "other",
+      "viewBox": "0 0 20 20",
+      "usedFor": "Share button (regular state)",
+      "note": "Fluent UI v2 icon",
+      "savedAs": "assets/icons/share-regular.svg"
+    },
+    "ChevronDown_fluent": {
+      "region": "other",
+      "viewBox": "0 0 20 20",
+      "usedFor": "Dropdown chevron (Fluent UI v2)",
+      "savedAs": "assets/icons/chevron-down-fluent.svg"
+    }
+  },
+  "fontIcon": {
+    "header": {
+      "SiteMap":             { "charCode": "U+E700", "font": "Dyn CRM Symbol", "fabricEquiv": "GlobalNavButton",      "note": "Hamburger menu" },
+      "Search":              { "charCode": null,     "font": "FabricMDL2Icons", "fabricClass": "ms-Icon--Search",     "note": "Search box icon" },
+      "Assistant":           { "charCode": "U+EA80", "font": "Dyn CRM Symbol", "fabricEquiv": "Lightbulb",           "note": "RelationshipAssistant-symbol, no exact Fabric match" },
+      "New":                 { "charCode": "U+E710", "font": "Dyn CRM Symbol", "fabricClass": "ms-Icon--Add",        "note": "Same codepoint as Fabric Add" },
+      "AdvancedFind":        { "charCode": "U+E71C", "font": "Dyn CRM Symbol", "fabricClass": "ms-Icon--Filter",     "note": "Same codepoint as Fabric Filter" },
+      "Notifications":       { "charCode": "U+EA8F", "font": "Dyn CRM Symbol", "fabricEquiv": "Ringer",              "note": "ReminderWithCall-symbol" },
+      "Settings":            { "charCode": "U+E713", "font": "Dyn CRM Symbol", "fabricClass": "ms-Icon--Settings",   "note": "Same codepoint" },
+      "Help":                { "charCode": "U+E897", "font": "Dyn CRM Symbol", "fabricEquiv": "Help",                "note": "Already using charCode in prototype" },
+      "UserInfo":            { "charCode": "U+E77B", "font": "Dyn CRM Symbol", "fabricClass": "ms-Icon--Contact",    "note": "MembersIcon-symbol, same as Contact" }
+    },
+    "sidebar": {
+      "Home":                { "charCode": "U+E80F", "font": "Dyn CRM Symbol", "fabricClass": "ms-Icon--Home",       "note": "Same codepoint" },
+      "Pinned":              { "charCode": "U+E840", "font": "Dyn CRM Symbol", "fabricClass": "ms-Icon--Pinned",     "note": "Same codepoint" },
+      "ChevronDown":         { "charCode": "U+E70D", "font": "Dyn CRM Symbol", "fabricClass": "ms-Icon--ChevronDown","note": "Expand/collapse chevron" },
+      "ChevronUp":           { "charCode": "U+E70E", "font": "Dyn CRM Symbol", "fabricClass": "ms-Icon--ChevronUp",  "note": "Collapse chevron" },
+      "AreaSwitcher":        { "charCode": "U+EC8F", "font": "Dyn CRM Symbol", "note": "Already using charCode in prototype" }
+    },
+    "commandBar": {
+      "ColumnOptions":       { "font": "FabricMDL2Icons-11", "fabricClass": "ms-Icon--ColumnOptions", "usedFor": "Edit columns" },
+      "Filter":              { "font": "FabricMDL2Icons",    "fabricClass": "ms-Icon--Filter",        "usedFor": "Edit filters" }
+    },
+    "grid": {
+      "SortUp":              { "font": "FabricMDL2Icons",    "fabricClass": "ms-Icon--SortUp",        "usedFor": "Column sort indicator" },
+      "ChevronDownSmall":    { "font": "FabricMDL2Icons-3",  "fabricClass": "ms-Icon--ChevronDownSmall", "usedFor": "Column menu" },
+      "MoreVertical":        { "charCode": "U+F2BC", "font": "Dyn CRM Symbol", "usedFor": "Row context menu" }
+    }
+  },
+  "extractedAt": "2026-10-16T05:07:35.396Z",
+  "pageUrl": "https://prmuat.crm.microsoftdynamics.us/main.aspx"
+}

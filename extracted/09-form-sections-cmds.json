@@ -1,0 +1,56 @@
+{
+  "sectionTitle": {
+    "tag": "H2",
+    "text": "Call Info",
+    "backgroundColor": "rgba(0, 0, 0, 0)",
+    "color": "rgb(36, 36, 36)",
+    "fontSize": "14px",
+    "fontWeight": "600",
+    "lineHeight": "20px",
+    "padding": "4px 0px 0px",
+    "height": "20px",
+    "borderBottom": "0px none rgb(36, 36, 36)",
+    "letterSpacing": "normal",
+    "textTransform": "none",
+    "margin": "0px"
+  },
+  "backBtn": {
+    "tag": "BUTTON",
+    "text": "",
+    "backgroundColor": "rgb(255, 255, 255)",
+    "color": "rgb(216, 216, 216)",
+    "fontSize": "14px",
+    "fontWeight": "400",
+    "lineHeight": "32px",
+    "padding": "1px 6px",
+    "height": "32px",
+    "borderBottom": "0px solid rgb(245, 245, 245)",
+    "cursor": "default",
+    "borderRadius": "4px"
+  },
+  "formToolbar": null,
+  "lookupPill": null,
+  "readOnlyValue": {
+    "text": "To, Multiple Selection Lookup, Readonly",
+    "color": "rgb(36, 36, 36)",
+    "fontSize": "14px",
+    "fontWeight": "400",
+    "lineHeight": "normal",
+    "padding": "0px",
+    "height": "auto",
+    "backgroundColor": "rgba(0, 0, 0, 0)",
+    "borderBottom": "0px none rgb(36, 36, 36)"
+  },
+  "savedIndicator": {
+    "tag": "SPAN",
+    "text": "- Saved",
+    "backgroundColor": "rgba(0, 0, 0, 0)",
+    "color": "rgb(97, 97, 97)",
+    "fontSize": "14px",
+    "fontWeight": "400",
+    "lineHeight": "28px",
+    "padding": "0px 0px 0px 6px",
+    "height": "28px",
+    "borderBottom": "0px none rgb(97, 97, 97)"
+  }
+}

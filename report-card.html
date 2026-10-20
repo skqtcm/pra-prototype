@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRM — Provider Report Card (D365 Prototype)</title>
+  <link rel="stylesheet" href="d365-ui-kit.css">
+  <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css">
+  <style>
+    .ms-Icon { font-size: 16px; }
+    .d365-header__action-btn .ms-Icon { font-size: 16px; line-height: 1; }
+    .d365-command-bar__btn .ms-Icon { font-size: 16px; line-height: 1; vertical-align: middle; }
+
+    /* Report Card sections */
+    .rc-card { background: var(--d365-card-bg); border-radius: var(--d365-radius-lg); box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 0.5px rgba(0,0,0,0.04); padding: var(--d365-space-lg); margin-bottom: var(--d365-space-base); }
+    .rc-card__title { font-size: var(--d365-font-size-base); font-weight: var(--d365-font-weight-semibold); color: var(--d365-text-primary); margin-bottom: var(--d365-space-md); }
+    .rc-card__subtitle { font-size: var(--d365-font-size-base); font-weight: var(--d365-font-weight-semibold); color: var(--d365-text-primary); margin-bottom: var(--d365-space-sm); }
+    .rc-meta { font-size: var(--d365-font-size-sm); color: var(--d365-text-secondary); margin-bottom: 4px; }
+    .rc-confidential { font-size: 11px; color: var(--d365-text-disabled); font-style: italic; }
+
+    /* Snapshot pills */
+    .rc-snapshot-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--d365-space-md); }
+    .rc-snap-pill { border-radius: var(--d365-radius-lg); box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 0.5px rgba(0,0,0,0.04); padding: var(--d365-space-md) var(--d365-space-base); text-align: center; background: var(--d365-card-bg); }
+    .rc-snap-pill__label { font-size: var(--d365-font-size-sm); color: var(--d365-text-secondary); margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .rc-snap-pill__value { font-size: var(--d365-font-size-base); font-weight: var(--d365-font-weight-semibold); display: flex; align-items: center; justify-content: center; gap: 4px; }
+    .rc-snap--meets { color: #0E7A0D; }
+    .rc-snap--monitor { color: #835B00; }
+    .rc-snap--needs-review { color: #A4262C; }
+
+    /* Divider */
+    .rc-divider { height: 3px; background: linear-gradient(90deg, #742774 0%, #A4262C 100%); border: none; margin: 0 0 var(--d365-space-base) 0; border-radius: 2px; }
+
+    /* Profile grid — two stacked 4-column tables */
+    .rc-profile-grid { display: flex; flex-direction: column; gap: 0; }
+    .rc-profile-grid table { width: 100%; border-collapse: collapse; font-size: var(--d365-font-size-base); }
+    .rc-profile-grid th { text-align: left; padding: 8px 12px; background: var(--d365-grid-header-bg); color: var(--d365-grid-header-text); font-size: var(--d365-font-size-sm); font-weight: var(--d365-font-weight-semibold); border-bottom: 1px solid var(--d365-border); }
+    .rc-profile-grid td { padding: 8px 12px; border-bottom: 1px solid var(--d365-divider); }
+
+    /* Metrics table */
+    .rc-metrics-table { width: 100%; border-collapse: collapse; font-size: var(--d365-font-size-base); }
+    .rc-metrics-table th { text-align: left; padding: 8px 12px; background: var(--d365-grid-header-bg); color: var(--d365-grid-header-text); font-size: var(--d365-font-size-sm); font-weight: var(--d365-font-weight-semibold); border-bottom: 1px solid var(--d365-border); }
+    .rc-metrics-table td { padding: 8px 12px; border-bottom: 1px solid var(--d365-divider); }
+    .rc-metrics-table td:first-child { font-weight: var(--d365-font-weight-semibold); }
+
+    /* Compliance badges */
+    .rc-badge { display: inline-block; padding: 2px 8px; border-radius: var(--d365-radius-md); font-size: var(--d365-font-size-sm); font-weight: var(--d365-font-weight-semibold); }
+    .rc-badge--none { background: #DFF6DD; color: #0E7A0D; }
+    .rc-badge--high { background: #FDE7E9; color: #A4262C; }
+    .rc-badge--increasing { background: #FFF4CE; color: #835B00; }
+
+    /* Commentary */
+    .rc-commentary-block { border-radius: var(--d365-radius-lg); box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 0 0 0.5px rgba(0,0,0,0.04); padding: var(--d365-space-base); margin-bottom: var(--d365-space-base); background: var(--d365-card-bg); }
+    .rc-commentary-block__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .rc-commentary-block__title { font-weight: var(--d365-font-weight-semibold); font-size: var(--d365-font-size-base); }
+    .rc-commentary-block__editable { font-size: 11px; color: var(--d365-text-secondary); display: flex; align-items: center; gap: 4px; }
+    .rc-commentary-block textarea { width: 100%; min-height: 80px; border: 1px solid var(--d365-border); border-radius: var(--d365-radius); padding: 8px 12px; font-family: var(--d365-font); font-size: var(--d365-font-size-base); resize: vertical; box-sizing: border-box; }
+    .rc-commentary-block textarea:focus { outline: none; border-color: var(--d365-link); }
+    .rc-save-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+    .rc-unsaved-dot { width: 8px; height: 8px; border-radius: 50%; background: #F59E0B; display: none; }
+    .rc-unsaved-dot.visible { display: block; }
+
+    /* Email tags */
+    .rc-email-tag {
+      display: inline-flex;
+      align-items: center;
+      background: var(--d365-hover-bg);
+      border: 1px solid var(--d365-border);
+      border-radius: var(--d365-radius);
+      padding: 2px 8px;
+      font-size: var(--d365-font-size-sm);
+      line-height: 22px;
+      white-space: nowrap;
+    }
+
+    /* Acknowledgment */
+    .rc-checkbox-row { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+    .rc-checkbox-row label { display: flex; align-items: center; gap: 8px; font-size: var(--d365-font-size-base); cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<div class="d365-app" id="app"></div>
+
+<script src="js/pra-data.js"></script>
+<script src="js/d365-app.js"></script>
+<script>
+var providerId = getParam('id') || '214577';
+var provider = getProvider(providerId);
+if (!provider) { document.body.innerHTML = '<p>Provider not found.</p>'; throw new Error('No provider'); }
+var rc = PRA_DATA.reportCards[providerId];
+if (!rc) { document.body.innerHTML = '<p>No report card data for this provider.</p>'; throw new Error('No report card'); }
+var providerTitle = titleCase(provider.name);
+
+function rcMetricBadge(status) {
+  var map = { meets: 'd365-metric--on-target', monitor: 'd365-metric--watch', needs_review: 'd365-metric--at-risk' };
+  var label = { meets: 'Meets', monitor: 'Monitor', needs_review: 'Needs Review' };
+  return '<span class="d365-metric-badge ' + (map[status] || '') + '">' + (label[status] || status) + '</span>';
+}
+
+function rcComplianceBadge(value) {
+  var v = value.toLowerCase();
+  var cls = 'rc-badge--none';
+  if (v === 'high') cls = 'rc-badge--high';
+  else if (v === 'increasing') cls = 'rc-badge--increasing';
+  return '<span class="rc-badge ' + cls + '">' + value + '</span>';
+}
+
+function rcSnapClass(status) {
+  var map = { meets: 'rc-snap--meets', monitor: 'rc-snap--monitor', needs_review: 'rc-snap--needs-review' };
+  return map[status] || '';
+}
+
+renderShell('reports');
+
+var main = document.getElementById('main-content');
+main.innerHTML = `
+  <!-- Command Bar -->
+  <div class="d365-command-bar">
+    <button class="d365-command-bar__btn" onclick="history.back()"><i class="ms-Icon ms-Icon--Back"></i></button>
+    <div class="d365-command-bar__divider"></div>
+    <button class="d365-command-bar__btn" onclick="window.print()"><i class="ms-Icon ms-Icon--PDF"></i> Export PDF</button>
+    <button class="d365-command-bar__btn" onclick="rcOpenSendModal()"><i class="ms-Icon ms-Icon--Mail"></i> Send to Provider</button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Refresh"></i> Refresh</button>
+    <div class="d365-command-bar__divider"></div>
+    <a class="d365-command-bar__btn" href="provider-dashboard.html?id=${providerId}"><i class="ms-Icon ms-Icon--AreaChart"></i> Performance</a>
+    <a class="d365-command-bar__btn" href="provider-detail.html?id=${providerId}"><i class="ms-Icon ms-Icon--ContactInfo"></i> Call Detail</a>
+    <div class="d365-command-bar__spacer"></div>
+    <button class="d365-command-bar__btn d365-command-bar__btn--share"><i class="ms-Icon ms-Icon--Share"></i> Share</button>
+  </div>
+
+  <div class="d365-content-scroll">
+    <!-- Header -->
+    <div class="rc-card" style="display:flex;flex-direction:column;gap:2px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+          <div class="d365-view-header__title">Quarterly Provider Performance Report Card</div>
+          <div style="font-size:var(--d365-font-size-base);color:var(--d365-text-secondary);margin-top:2px;">
+            ${rc.company}
+          </div>
+          <div class="rc-meta" style="margin-top:2px;">Data Reflected: ${rc.dataReflected} (One Quarter in Arrears)</div>
+          <div class="rc-confidential">The information contained in this document is proprietary and intended solely for authorized provider review and internal performance monitoring.</div>
+        </div>
+        <button class="d365-btn d365-btn--primary" onclick="rcOpenSendModal()" style="white-space:nowrap;"><i class="ms-Icon ms-Icon--Mail" style="font-size:12px;"></i> Send to Provider</button>
+      </div>
+      <hr class="rc-divider">
+    </div>
+
+    <!-- Provider Profile -->
+    <div class="rc-card">
+      <div class="rc-card__title">Provider Profile</div>
+      <div class="rc-profile-grid">
+        <table>
+          <thead><tr><th>Provider Name</th><th>Provider ID</th><th>Specialty</th><th>State</th></tr></thead>
+          <tbody><tr><td>${providerTitle}</td><td>${provider.id}</td><td>${provider.specialty}</td><td>${provider.state}</td></tr></tbody>
+        </table>
+        <table style="margin-top:12px;">
+          <thead><tr><th>Lines of Business</th><th>Assigned PRA</th><th>Reporting Quarter</th><th>Report Date</th></tr></thead>
+          <tbody><tr><td>${rc.lob}</td><td>${PRA_DATA.currentUser.name}</td><td>${rc.dataReflected}</td><td>${rc.reportDate}</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Executive Performance Snapshot -->
+    <div class="rc-card">
+      <div class="rc-card__title">Executive Performance Snapshot</div>
+      <div class="rc-snapshot-row">
+        ${(function() {
+          var meta = {
+            quality: { label: 'Quality', icon: 'Diagnostic' },
+            timeliness: { label: 'Timeliness', icon: 'Clock' },
+            addendums: { label: 'Addendums', icon: 'EditNote' },
+            customerService: { label: 'Customer Service', icon: 'People' }
+          };
+          return ['quality','timeliness','addendums','customerService'].map(function(key) {
+            var s = rc.snapshot[key];
+            var m = meta[key];
+            return '<div class="rc-snap-pill">' +
+              '<div class="rc-snap-pill__label"><i class="ms-Icon ms-Icon--' + m.icon + '" style="font-size:14px;"></i> ' + m.label + '</div>' +
+              '<div class="rc-snap-pill__value ' + rcSnapClass(s.status) + '">' + rcMetricBadge(s.status.replace('_', '_')) + '</div>' +
+              '</div>';
+          }).join('');
+        })()}
+      </div>
+    </div>
+
+    <!-- Metrics by Program -->
+    <div class="rc-card">
+      <div class="rc-card__title">Metrics by Program</div>
+      <table class="rc-metrics-table">
+        <thead>
+          <tr><th>Program</th><th>Timeliness</th><th>Quality</th><th>Customer Service</th></tr>
+        </thead>
+        <tbody>
+          ${rc.metricsByProgram.map(function(m) {
+            function cell(metric) {
+              return '<strong>' + metric.score + '%</strong><br>' + rcMetricBadge(metric.status);
+            }
+            return '<tr><td>' + m.program + '</td><td>' + cell(m.timeliness) + '</td><td>' + cell(m.quality) + '</td><td>' + cell(m.customerService) + '</td></tr>';
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Exceptions & Operational Impacts -->
+    <div class="rc-card">
+      <div class="rc-card__title">Exceptions &amp; Operational Impacts</div>
+      ${rc.exceptions.length ? '<table class="rc-metrics-table"><thead><tr><th>Impact Description</th><th>Affected Metrics</th></tr></thead><tbody>' +
+        rc.exceptions.map(function(e) {
+          return '<tr><td>' + e.impact + '</td><td>' + e.affectedMetrics + '</td></tr>';
+        }).join('') + '</tbody></table>'
+        : '<p style="color:var(--d365-text-secondary);font-size:var(--d365-font-size-base);">No exceptions reported this period.</p>'}
+    </div>
+
+    <!-- Compliance Detail -->
+    <div class="rc-card">
+      <div class="rc-card__title">Compliance Detail</div>
+      <table class="rc-metrics-table">
+        <thead><tr><th>Late Reports (Case #)</th><th>Pending Addendums</th><th>Clarifications</th><th>QA Response Trend</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>${rcComplianceBadge(rc.compliance.lateReports)}</td>
+            <td>${rcComplianceBadge(rc.compliance.pendingAddendums)}</td>
+            <td>${rcComplianceBadge(rc.compliance.clarifications)}</td>
+            <td>${rcComplianceBadge(rc.compliance.qaResponseTrend)}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Customer Service Summary -->
+    <div class="rc-card">
+      <div class="rc-card__title">Customer Service Summary</div>
+      <div style="font-size:var(--d365-font-size-base);line-height:1.8;">
+        <div style="margin-bottom:8px;"><span style="font-weight:600;">Customer Service Tickets:</span> ${rc.customerServiceSummary.tickets}</div>
+        <div style="margin-bottom:8px;"><span style="font-weight:600;color:#0E7A0D;">Positive Feedback:</span> ${rc.customerServiceSummary.positiveFeedback}</div>
+        <div><span style="font-weight:600;color:#A4262C;">Negative Feedback:</span> ${rc.customerServiceSummary.negativeFeedback}</div>
+      </div>
+    </div>
+
+    <!-- PRA Commentary -->
+    <div class="rc-card">
+      <div class="rc-card__title">PRA Commentary</div>
+
+      <div class="rc-commentary-block">
+        <div class="rc-commentary-block__header">
+          <div class="rc-commentary-block__title">Room for Improvement</div>
+          <div class="rc-commentary-block__editable"><i class="ms-Icon ms-Icon--Robot" style="font-size:12px;"></i> AI-generated</div>
+        </div>
+        <p style="font-size:var(--d365-font-size-base);line-height:1.6;margin:0;color:var(--d365-text-primary);">${rc.commentary.roomForImprovement}</p>
+      </div>
+
+      <div class="rc-commentary-block">
+        <div class="rc-commentary-block__header">
+          <div class="rc-commentary-block__title">A Job Well Done</div>
+          <div class="rc-commentary-block__editable"><i class="ms-Icon ms-Icon--Robot" style="font-size:12px;"></i> AI-generated</div>
+        </div>
+        <p style="font-size:var(--d365-font-size-base);line-height:1.6;margin:0;color:var(--d365-text-primary);">${rc.commentary.jobWellDone}</p>
+      </div>
+
+      <div class="rc-commentary-block">
+        <div class="rc-commentary-block__header">
+          <div class="rc-commentary-block__title">Targeted Reminders</div>
+          <div class="rc-commentary-block__editable"><i class="ms-Icon ms-Icon--Robot" style="font-size:12px;"></i> AI-generated</div>
+        </div>
+        <p style="font-size:var(--d365-font-size-base);line-height:1.6;margin:0;color:var(--d365-text-primary);white-space:pre-line;">${rc.commentary.targetedReminders}</p>
+      </div>
+    </div>
+
+    <!-- Provider Acknowledgment & Feedback -->
+    <div class="rc-card">
+      <div class="rc-card__title">Provider Acknowledgment &amp; Feedback</div>
+      <div style="font-size:var(--d365-font-size-base);margin-bottom:12px;">
+        <div class="rc-card__subtitle">Provider Comments</div>
+        <p style="line-height:1.6;margin:0;color:var(--d365-text-primary);">${rc.providerAck.comments}</p>
+      </div>
+      <div style="display:flex;gap:16px;font-size:var(--d365-font-size-base);">
+        <span>${rc.providerAck.acknowledged ? '<i class="ms-Icon ms-Icon--CheckboxComposite" style="color:#0E7A0D;"></i>' : '<i class="ms-Icon ms-Icon--Checkbox"></i>'} Provider has acknowledged this report card</span>
+        <span>${rc.providerAck.followUpRequested ? '<i class="ms-Icon ms-Icon--CheckboxComposite" style="color:#0E7A0D;"></i>' : '<i class="ms-Icon ms-Icon--Checkbox"></i>'} Follow-up meeting requested</span>
+      </div>
+      <div style="font-size:var(--d365-font-size-sm);color:var(--d365-text-secondary);margin-top:8px;">Completed by provider upon receipt</div>
+    </div>
+  </div>
+`;
+
+function rcOpenSendModal() {
+  var body = '<div style="margin-bottom:16px;">' +
+    '<label style="font-size:13px;font-weight:600;display:block;margin-bottom:4px;">To</label>' +
+    '<div id="rc-email-tags" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;border:1px solid var(--d365-border);border-radius:var(--d365-radius);padding:6px 8px;min-height:36px;cursor:text;" onclick="document.getElementById(\'rc-email-input\').focus()">' +
+      '<span class="rc-email-tag" data-email="' + provider.email + '">' + provider.email + ' <button onclick="rcRemoveTag(this.parentElement)" style="background:none;border:none;cursor:pointer;font-size:14px;color:var(--d365-text-secondary);padding:0 0 0 4px;line-height:1;">&times;</button></span>' +
+      '<input type="email" id="rc-email-input" placeholder="Add email..." style="border:none;outline:none;flex:1;min-width:140px;font-size:var(--d365-font-size-base);font-family:var(--d365-font);padding:2px 0;">' +
+    '</div>' +
+    '<div style="font-size:11px;color:var(--d365-text-secondary);margin-top:4px;">Press Enter or comma to add multiple recipients</div>' +
+    '</div>' +
+    '<div style="margin-bottom:16px;"><strong>Period:</strong> ' + rc.dataReflected + '</div>' +
+    '<div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--d365-hover-bg);border-radius:var(--d365-radius);margin-bottom:16px;">' +
+    '<i class="ms-Icon ms-Icon--PDF" style="font-size:24px;color:#A4262C;"></i>' +
+    '<div><div style="font-weight:600;">Report Card — ' + providerTitle + '</div><div style="font-size:12px;color:var(--d365-text-secondary);">PDF &bull; 2 pages</div></div></div>' +
+    '<p style="font-size:var(--d365-font-size-sm);color:var(--d365-text-secondary);">This report card will be sent as a PDF attachment. The provider will be asked to acknowledge receipt and may submit feedback.</p>';
+  var footer = '<button class="d365-btn" onclick="closeModal(document.querySelector(\'.d365-modal-overlay\'))">Cancel</button>' +
+    '<button class="d365-btn d365-btn--primary" onclick="rcSendReport()"><i class="ms-Icon ms-Icon--Mail" style="font-size:12px;"></i> Send</button>';
+  showModal('Send Report Card to Provider', body, { footer: footer });
+
+  var input = document.getElementById('rc-email-input');
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault();
+      rcAddEmail(input);
+    }
+    if (e.key === 'Backspace' && !input.value) {
+      var tags = document.getElementById('rc-email-tags').querySelectorAll('.rc-email-tag');
+      if (tags.length) rcRemoveTag(tags[tags.length - 1]);
+    }
+  });
+  input.addEventListener('blur', function() { if (input.value.trim()) rcAddEmail(input); });
+}
+
+function rcAddEmail(input) {
+  var val = input.value.replace(/,/g, '').trim();
+  if (!val || !val.includes('@')) return;
+  var container = document.getElementById('rc-email-tags');
+  var existing = container.querySelectorAll('.rc-email-tag');
+  for (var i = 0; i < existing.length; i++) {
+    if (existing[i].dataset.email === val) { input.value = ''; return; }
+  }
+  var tag = document.createElement('span');
+  tag.className = 'rc-email-tag';
+  tag.dataset.email = val;
+  tag.innerHTML = val + ' <button onclick="rcRemoveTag(this.parentElement)" style="background:none;border:none;cursor:pointer;font-size:14px;color:var(--d365-text-secondary);padding:0 0 0 4px;line-height:1;">&times;</button>';
+  container.insertBefore(tag, input);
+  input.value = '';
+}
+
+function rcRemoveTag(tag) {
+  tag.parentElement.removeChild(tag);
+}
+
+function rcSendReport() {
+  var tags = document.getElementById('rc-email-tags').querySelectorAll('.rc-email-tag');
+  var emails = [];
+  tags.forEach(function(t) { emails.push(t.dataset.email); });
+  if (!emails.length) { showToast('Please add at least one recipient', 'info'); return; }
+  closeModal(document.querySelector('.d365-modal-overlay'));
+  showToast('Report card sent to ' + emails.join(', '), 'success');
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRM — PRA Calls (D365 Prototype)</title>
+  <link rel="stylesheet" href="d365-ui-kit.css">
+  <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css">
+  <style>
+    .ms-Icon { font-size: 16px; }
+    .d365-header__action-btn .ms-Icon { font-size: 16px; line-height: 1; }
+    .d365-command-bar__btn .ms-Icon { font-size: 16px; line-height: 1; vertical-align: middle; }
+    .d365-lookup__icon .ms-Icon { font-size: 14px; line-height: 1; }
+  </style>
+</head>
+<body>
+
+<div class="d365-app" id="app"></div>
+
+<script src="js/pra-data.js"></script>
+<script src="js/d365-app.js"></script>
+<script>
+renderShell('pra-calls');
+
+var main = document.getElementById('main-content');
+
+/* ── Enrich call data with provider info + queue info ── */
+var allCalls = PRA_DATA.calls.map(function(call) {
+  var provider = getProvider(call.providerId);
+  var queueItem = PRA_DATA.callQueue.find(function(q) { return q.id === call.id; });
+  return Object.assign({}, call, {
+    priority: queueItem ? queueItem.priority : (call.status === 'Open' ? 'Medium' : null),
+    dueDate: queueItem ? queueItem.dueDate : null
+  });
+});
+
+var statusOrder = { Open: 0, Overdue: 0, Completed: 1 };
+function sortCalls(arr) {
+  return arr.slice().sort(function(a, b) {
+    var sa = statusOrder[a.status] !== undefined ? statusOrder[a.status] : 0;
+    var sb = statusOrder[b.status] !== undefined ? statusOrder[b.status] : 0;
+    if (sa !== sb) return sa - sb;
+    var da = a.dueDate ? new Date(a.dueDate + 'T00:00:00').getTime() : Infinity;
+    var db = b.dueDate ? new Date(b.dueDate + 'T00:00:00').getTime() : Infinity;
+    return da - db;
+  });
+}
+
+var currentView = 'my-open';
+var myCalls = sortCalls(allCalls.filter(function(c) { return c.owner === PRA_DATA.currentUser.name; }));
+var myOpenCalls = sortCalls(allCalls.filter(function(c) { return c.owner === PRA_DATA.currentUser.name && computedStatus(c) !== 'Completed'; }));
+var completedCalls = sortCalls(allCalls.filter(function(c) { return computedStatus(c) === 'Completed'; }));
+var allSorted = sortCalls(allCalls);
+
+var viewMap = {
+  'my-open':       { label: 'My Open PRA Calls', data: myOpenCalls },
+  'assigned':      { label: 'Assigned PRA Calls', data: myCalls },
+  'completed':     { label: 'PRA Completed Calls', data: completedCalls },
+  'my-calls':      { label: 'My PRA Calls', data: myCalls },
+  'all':           { label: 'All PRA Calls', data: allSorted }
+};
+
+function getViewData() { return (viewMap[currentView] || viewMap['my-open']).data; }
+function getViewLabel() { return (viewMap[currentView] || viewMap['my-open']).label; }
+
+main.innerHTML = `
+  ${renderOverdueBanner()}
+
+  <!-- Command Bar -->
+  <div class="d365-command-bar">
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Back"></i></button>
+    <div class="d365-command-bar__divider"></div>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--GridViewSmall"></i> CC_AnchorShellGridCo...</button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--BarChart4"></i> Show Chart</button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--TaskSolid"></i> Task</button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Mail"></i> Email</button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Calendar"></i> Appointment</button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Phone"></i> Recruitment Phone Call</button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--More"></i></button>
+    <div class="d365-command-bar__spacer"></div>
+    <button class="d365-command-bar__btn d365-command-bar__btn--share"><i class="ms-Icon ms-Icon--Share"></i> Share</button>
+  </div>
+
+  <!-- View Card: header + toolbar + grid + footer as one floating card -->
+  <div class="d365-view-card">
+    <!-- View Header with Switcher -->
+    <div class="d365-view-header">
+      <div class="d365-view-header__title" style="position:relative;">
+        <span id="view-label">My Open PRA Calls</span>
+        <span class="d365-view-header__chevron" id="view-chevron" onclick="toggleViewMenu()"><span style="font-family:FabricMDL2Icons;font-size:16px;">&#xe70d;</span></span>
+        <div class="d365-view-menu" id="view-menu">
+          <div class="d365-view-menu__section-label">System Views</div>
+          <div class="d365-view-menu__item d365-view-menu__item--active" data-view="my-open" onclick="switchView('my-open')">
+            <i class="ms-Icon ms-Icon--CheckMark" style="font-size:12px;"></i> My Open PRA Calls <span style="color:var(--d365-text-disabled);margin-left:auto;font-size:12px;">Default</span>
+          </div>
+          <div class="d365-view-menu__item" data-view="assigned" onclick="switchView('assigned')">
+            <i class="ms-Icon ms-Icon--CheckMark" style="font-size:12px;visibility:hidden;"></i> Assigned PRA Calls
+          </div>
+          <div class="d365-view-menu__item" data-view="completed" onclick="switchView('completed')">
+            <i class="ms-Icon ms-Icon--CheckMark" style="font-size:12px;visibility:hidden;"></i> PRA Completed Calls
+          </div>
+          <div class="d365-view-menu__item" data-view="my-calls" onclick="switchView('my-calls')">
+            <i class="ms-Icon ms-Icon--CheckMark" style="font-size:12px;visibility:hidden;"></i> My PRA Calls
+          </div>
+          <div class="d365-view-menu__item" data-view="all" onclick="switchView('all')">
+            <i class="ms-Icon ms-Icon--CheckMark" style="font-size:12px;visibility:hidden;"></i> All PRA Calls
+          </div>
+        </div>
+      </div>
+      <div class="d365-view-header__actions">
+        <button class="d365-view-header__action"><i class="ms-Icon ms-Icon--TripleColumn"></i> Edit columns</button>
+        <button class="d365-view-header__action"><i class="ms-Icon ms-Icon--Filter"></i> Edit filters</button>
+      </div>
+    </div>
+
+    <!-- Toolbar with search + filters -->
+    <div class="d365-toolbar">
+      <div class="d365-toolbar__search">
+        <input type="text" id="calls-search" placeholder="Search calls...">
+      </div>
+      <select class="d365-select" id="filter-status">
+        <option value="All">Activity Status: All</option>
+        <option value="Open">Open</option>
+        <option value="Overdue">Overdue</option>
+        <option value="Completed">Completed</option>
+      </select>
+      <select class="d365-select" id="filter-category">
+        <option value="All">Category: All</option>
+        <option value="QTC Quarterly Feedback">QTC Quarterly Feedback</option>
+        <option value="Site Visit Follow-Up">Site Visit Follow-Up</option>
+        <option value="Compliance Review">Compliance Review</option>
+      </select>
+      <div class="d365-toolbar__spacer"></div>
+      <span class="d365-toolbar__count"></span>
+    </div>
+
+    <!-- Data Grid -->
+    <div class="d365-grid">
+      <table id="calls-table">
+        <thead><tr></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Grid Footer -->
+    <div class="d365-grid__footer">
+      <span class="d365-grid__row-count">Rows: ${myOpenCalls.length}</span>
+      <div class="d365-grid__pagination">
+        <button disabled>⟨⟨</button>
+        <button disabled>⟨</button>
+        <span>Page 1</span>
+        <button disabled>⟩</button>
+        <button disabled>⟩⟩</button>
+      </div>
+    </div>
+  </div>
+`;
+
+var callsTableRef = initTable('calls-table', {
+  data: getViewData(),
+  columns: [
+    { key: 'priority', label: 'Priority', sortable: true,
+      render: function(row) { return row.priority ? priorityIcon(row.priority) : '—'; } },
+    { key: 'subject', label: 'Subject', sortable: true,
+      render: function(row) { return '<a href="provider-detail.html?id=' + row.providerId + '&call=' + row.id + '">' + row.subject + '</a>'; } },
+    { key: 'to', label: 'To', sortable: true,
+      render: function(row) { return '<a href="provider-detail.html?id=' + row.providerId + '">' + titleCase(row.to) + '</a>'; } },
+    { key: 'from', label: 'From', sortable: true },
+    { key: 'dueDate', label: 'Due', sortable: true,
+      render: function(row) { return dueCountdown(row.dueDate); } },
+    { key: 'status', label: 'Activity Status', sortable: true,
+      render: function(row) { return statusBadge(computedStatus(row)); } },
+    { key: 'category', label: 'Category', sortable: true },
+    { key: 'dateCreated', label: 'Date Created', sortable: true,
+      render: function(row) { return formatDate(row.dateCreated); } }
+  ],
+  searchInputId: 'calls-search',
+  filters: [
+    { id: 'filter-status', key: 'status', fn: function(row, val) { return computedStatus(row) === val; } },
+    { id: 'filter-category', key: 'category' }
+  ],
+  rowClass: function(row) {
+    if (row.dueDate) {
+      var today = new Date(); today.setHours(0,0,0,0);
+      var due = new Date(row.dueDate + 'T00:00:00'); due.setHours(0,0,0,0);
+      if (due < today) return 'd365-row--overdue';
+    }
+    return '';
+  },
+  onRowClick: function(row) {
+    window.location.href = 'provider-detail.html?id=' + row.providerId + '&call=' + row.id;
+  }
+});
+
+function toggleViewMenu() {
+  document.getElementById('view-menu').classList.toggle('d365-view-menu--open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('#view-chevron') && !e.target.closest('#view-menu')) {
+    document.getElementById('view-menu').classList.remove('d365-view-menu--open');
+  }
+});
+
+function switchView(view) {
+  currentView = view;
+  document.getElementById('view-label').textContent = getViewLabel();
+  document.getElementById('view-menu').classList.remove('d365-view-menu--open');
+  document.querySelectorAll('.d365-view-menu__item').forEach(function(el) {
+    var check = el.querySelector('.ms-Icon--CheckMark');
+    if (el.dataset.view === view) {
+      el.classList.add('d365-view-menu__item--active');
+      if (check) check.style.visibility = 'visible';
+    } else {
+      el.classList.remove('d365-view-menu__item--active');
+      if (check) check.style.visibility = 'hidden';
+    }
+  });
+  callsTableRef.setData(getViewData());
+}
+</script>
+
+</body>
+</html>

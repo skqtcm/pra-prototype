@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRM — Provider Detail (D365 Prototype)</title>
+  <link rel="stylesheet" href="d365-ui-kit.css">
+  <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css">
+  <style>
+    .ms-Icon { font-size: 16px; }
+    .d365-header__action-btn .ms-Icon { font-size: 16px; line-height: 1; }
+    .d365-command-bar__btn .ms-Icon { font-size: 16px; line-height: 1; vertical-align: middle; }
+    .d365-lookup__icon .ms-Icon { font-size: 14px; line-height: 1; }
+  </style>
+</head>
+<body>
+
+<div class="d365-app" id="app"></div>
+
+<script src="js/pra-data.js"></script>
+<script src="js/d365-app.js"></script>
+<script>
+var providerId = getParam('id') || '214577';
+var provider = getProvider(providerId);
+if (!provider) { document.body.innerHTML = '<p>Provider not found.</p>'; throw new Error('Not found'); }
+
+renderShell('my-providers');
+
+var main = document.getElementById('main-content');
+var calls = PRA_DATA.calls.filter(function(c) { return c.providerId === providerId; });
+var latestCall = calls[0] || {};
+var reports = PRA_DATA.reports[providerId] || [];
+main.innerHTML = `
+  <!-- Read-only Banner -->
+  <div class="d365-form__readonly-banner">
+    <i class="ms-Icon ms-Icon--Lock"></i>
+    Read-only. This record's status: Completed
+  </div>
+
+  <!-- Command Bar -->
+  <div class="d365-command-bar">
+    <button class="d365-command-bar__btn" onclick="history.back()"><i class="ms-Icon ms-Icon--Back"></i></button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--BulletedList2"></i></button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--GridViewSmall"></i></button>
+    <div class="d365-command-bar__divider"></div>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Refresh"></i> Refresh</button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Permissions"></i> Check Access</button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--QueueAdvanced"></i> Add to Queue</button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Flow"></i> Flow <i class="ms-Icon ms-Icon--ChevronDown" style="font-size:10px"></i></button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--WordDocument"></i> Word Templates <i class="ms-Icon ms-Icon--ChevronDown" style="font-size:10px"></i></button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--ReportDocument"></i> Run Report <i class="ms-Icon ms-Icon--ChevronDown" style="font-size:10px"></i></button>
+    <div class="d365-command-bar__spacer"></div>
+    <button class="d365-command-bar__btn d365-command-bar__btn--share"><i class="ms-Icon ms-Icon--Share"></i> Share</button>
+  </div>
+
+  <!-- Form Header -->
+  <div class="d365-form__header">
+    <div class="d365-form__header-left">
+      <div>
+        <span class="d365-form__title">${provider.name.toUpperCase()}, ${provider.id} - ${provider.city}, ${provider.state}</span>
+        <span class="d365-form__save-status">Saved</span>
+      </div>
+      <div class="d365-form__entity-type">PRA Call</div>
+    </div>
+    <div class="d365-form__header-fields">
+      <div class="d365-form__header-field">
+        <div class="d365-form__header-field-value"># SVC-PRM</div>
+        <div class="d365-form__header-field-label">Completed By</div>
+      </div>
+      <div class="d365-form__header-field">
+        <div class="d365-form__header-field-value">${latestCall.status || 'Completed'}</div>
+        <div class="d365-form__header-field-label">Activity Status</div>
+      </div>
+      <div class="d365-form__header-field">
+        <div class="d365-form__header-field-value"><a href="#">${PRA_DATA.currentUser.name}</a></div>
+        <div class="d365-form__header-field-label">Owner</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="d365-tabs" id="detail-tabs">
+    <button class="d365-tabs__tab d365-tabs__tab--active" data-tab="call-info">Call Information Section</button>
+    <button class="d365-tabs__tab" data-tab="pra-actions">PRA Actions</button>
+    <button class="d365-tabs__tab" data-tab="reports">Reports Section <span class="d365-tabs__badge">NEW</span></button>
+    <button class="d365-tabs__tab" data-tab="sub-grids">Sub-Grids</button>
+    <button class="d365-tabs__tab" data-tab="notes">Notes & Attachments</button>
+    <button class="d365-tabs__tab" data-tab="admin">Administration</button>
+    <button class="d365-tabs__tab" data-tab="related">Related <i class="ms-Icon ms-Icon--ChevronDown" style="font-size:10px"></i></button>
+  </div>
+
+  <!-- Tab Panels -->
+  <div class="d365-form">
+    <!-- Call Info -->
+    <div class="tab-panel" id="tab-call-info">
+      <div class="d365-form__section">
+        <div class="d365-form__section-title">Call Info</div>
+        <div class="d365-form__fields">
+          <div class="d365-form__field d365-form__field--full">
+            <div class="d365-form__field-label">Subject</div>
+            <input class="d365-form__field-input" value="${latestCall.subject || provider.name}" readonly>
+          </div>
+          <div class="d365-form__field">
+            <div class="d365-form__field-label">To</div>
+            <div class="d365-form__field-value">
+              <span class="d365-lookup"><span class="d365-lookup__icon"><i class="ms-Icon ms-Icon--Contact"></i></span><a class="d365-lookup__link">${provider.name}</a></span>
+            </div>
+          </div>
+          <div class="d365-form__field">
+            <div class="d365-form__field-label">From</div>
+            <div class="d365-form__field-value">
+              <span class="d365-lookup"><span class="d365-lookup__icon"><i class="ms-Icon ms-Icon--Contact"></i></span><a class="d365-lookup__link">${latestCall.from || PRA_DATA.currentUser.name}</a></span>
+            </div>
+          </div>
+          <div class="d365-form__field d365-form__field--full">
+            <div class="d365-form__field-label">PRA Interaction Categories</div>
+            <input class="d365-form__field-input" value="${latestCall.category || ''}" readonly placeholder="---">
+          </div>
+        </div>
+      </div>
+      <div class="d365-form__section">
+        <div class="d365-form__section-title">Provider Info</div>
+        <div class="d365-form__fields">
+          <div class="d365-form__field d365-form__field--full">
+            <div class="d365-form__field-label">* Provider Name</div>
+            <div class="d365-form__field-value">
+              <span class="d365-lookup"><span class="d365-lookup__icon"><i class="ms-Icon ms-Icon--Contact"></i></span><a class="d365-lookup__link" href="provider-dashboard.html?id=${providerId}">${provider.name.toUpperCase()}</a></span>
+            </div>
+          </div>
+          <div class="d365-form__field d365-form__field--full">
+            <div class="d365-form__field-label">* Provider ID <i class="ms-Icon ms-Icon--Lock" style="font-size:12px;color:#F59E0B;"></i></div>
+            <div class="d365-form__field-value">${provider.id}</div>
+          </div>
+          <div class="d365-form__field d365-form__field--full">
+            <div class="d365-form__field-label">* City <i class="ms-Icon ms-Icon--Lock" style="font-size:12px;color:#F59E0B;"></i></div>
+            <div class="d365-form__field-value">${provider.city}</div>
+          </div>
+          <div class="d365-form__field d365-form__field--full">
+            <div class="d365-form__field-label">* State <i class="ms-Icon ms-Icon--Lock" style="font-size:12px;color:#F59E0B;"></i></div>
+            <div class="d365-form__field-value">${provider.state}</div>
+          </div>
+          <div class="d365-form__field d365-form__field--full">
+            <div class="d365-form__field-label">* Email <i class="ms-Icon ms-Icon--Lock" style="font-size:12px;color:#F59E0B;"></i></div>
+            <div class="d365-form__field-value"><a href="mailto:${provider.email}">${provider.email}</a></div>
+          </div>
+          <div class="d365-form__field d365-form__field--full">
+            <div class="d365-form__field-label">* Corporate Name <i class="ms-Icon ms-Icon--Lock" style="font-size:12px;color:#F59E0B;"></i></div>
+            <div class="d365-form__field-value">${provider.corporate}</div>
+          </div>
+        </div>
+      </div>
+      <div class="d365-form__section">
+        <div class="d365-form__section-title">Linked Provider Request</div>
+        <div class="d365-form__fields">
+          <div class="d365-form__field d365-form__field--full">
+            <div class="d365-form__field-label">Provider Request</div>
+            <div class="d365-form__field-value" style="color:var(--d365-text-disabled);">---</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRA Actions -->
+    <div class="tab-panel" id="tab-pra-actions" style="display:none">
+      <div class="d365-form__section">
+        <div class="d365-form__section-title">PRA Actions and Dispositions</div>
+        <div class="d365-form__fields">
+          <div class="d365-form__field">
+            <div class="d365-form__field-label">PRA Assigned</div>
+            <input class="d365-form__field-input" value="${PRA_DATA.currentUser.name}" readonly>
+          </div>
+          <div class="d365-form__field">
+            <div class="d365-form__field-label">Date PRA Assigned</div>
+            <input class="d365-form__field-input" value="${formatDate(latestCall.dateCreated)}" readonly>
+          </div>
+          <div class="d365-form__field">
+            <div class="d365-form__field-label">Attempt 1</div>
+            <input class="d365-form__field-input" value="${latestCall.dateCreated ? formatDate(latestCall.dateCreated) : ''}" readonly placeholder="---">
+          </div>
+          <div class="d365-form__field">
+            <div class="d365-form__field-label">Attempt 1 Method</div>
+            <input class="d365-form__field-input" value="Phone" readonly>
+          </div>
+          <div class="d365-form__field">
+            <div class="d365-form__field-label">Attempt 2</div>
+            <input class="d365-form__field-input" value="" readonly placeholder="---">
+          </div>
+          <div class="d365-form__field">
+            <div class="d365-form__field-label">Attempt 2 Method</div>
+            <input class="d365-form__field-input" value="" readonly placeholder="---">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reports -->
+    <div class="tab-panel" id="tab-reports" style="display:none">
+      <div class="d365-form__section">
+        <div class="d365-form__section-title">Reports for ${provider.name.toUpperCase()}, ${provider.id}</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+          <button class="d365-command-bar__btn" onclick="openGenerateModal()"><i class="ms-Icon ms-Icon--Add" style="font-size:14px"></i> New Report</button>
+          <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Refresh" style="font-size:14px"></i> Refresh</button>
+          <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Download" style="font-size:14px"></i> Export</button>
+          <span style="margin-left:auto;font-size:var(--d365-font-size-sm);color:var(--d365-text-secondary);">${reports.length} reports</span>
+        </div>
+        <div class="d365-grid" style="flex:none;">
+          <table id="reports-table">
+            <thead><tr></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sub-Grids -->
+    <div class="tab-panel" id="tab-sub-grids" style="display:none">
+      <div class="d365-form__section">
+        <div class="d365-subgrid">
+          <div class="d365-subgrid__header">
+            <span class="d365-subgrid__title">Call History</span>
+            <div class="d365-subgrid__actions">
+              <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Refresh"></i> Refresh</button>
+            </div>
+          </div>
+          <div class="d365-grid" style="flex:none;">
+            <table id="calls-history-table">
+              <thead><tr></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="tab-panel" id="tab-notes" style="display:none">
+      <div class="d365-timeline">
+        <div class="d365-timeline__header">
+          <span class="d365-timeline__title">Timeline</span>
+          <div class="d365-timeline__toolbar">
+            <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Add"></i></button>
+            <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Filter"></i></button>
+            <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Refresh"></i></button>
+          </div>
+        </div>
+        <input type="text" class="d365-timeline__search" placeholder="Search Timeline">
+        <div class="d365-timeline__note-input">
+          <i class="ms-Icon ms-Icon--Edit" style="font-size:14px"></i> Enter a note...
+        </div>
+        <div class="d365-grid__empty" style="margin-top:40px">
+          <div class="d365-grid__empty-icon"><i class="ms-Icon ms-Icon--FolderOpen" style="font-size:48px"></i></div>
+          <div class="d365-grid__empty-text">No activities to show</div>
+          <div style="display:flex;gap:8px;margin-top:16px;">
+            <button class="d365-btn d365-btn--primary" onclick="showToast('Note editor not available in prototype', 'info')"><i class="ms-Icon ms-Icon--Add" style="font-size:12px"></i> Add Note</button>
+            <button class="d365-btn" onclick="showToast('File upload not available in prototype', 'info')"><i class="ms-Icon ms-Icon--Attach" style="font-size:12px"></i> Attach File</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Administration -->
+    <div class="tab-panel" id="tab-admin" style="display:none">
+      <div class="d365-form__section">
+        <div class="d365-form__section-title">ADMINISTRATION</div>
+        <div class="d365-form__fields">
+          <div class="d365-form__field d365-form__field--full">
+            <div class="d365-form__field-label">Miscellaneous Tracking</div>
+            <input class="d365-form__field-input" value="" readonly placeholder="---">
+          </div>
+          <div class="d365-form__field">
+            <div class="d365-form__field-label">Linked Ticket</div>
+            <input class="d365-form__field-input" value="" readonly placeholder="---">
+          </div>
+          <div class="d365-form__field">
+            <div class="d365-form__field-label">Provider Help Ticket</div>
+            <input class="d365-form__field-input" value="" readonly placeholder="---">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+
+initTabs('detail-tabs');
+
+/* Reports table */
+if (reports.length) {
+  initTable('reports-table', {
+    data: reports,
+    columns: [
+      { key: 'name', label: 'Report Name', sortable: true,
+        render: function(r) { return '<a href="report-card.html?id=' + providerId + '&report=' + r.id + '">' + r.name + '</a>'; } },
+      { key: 'type', label: 'Report Type', sortable: true },
+      { key: 'period', label: 'Period Covered', sortable: true },
+      { key: 'dateGenerated', label: 'Date Generated', sortable: true,
+        render: function(r) { return formatDate(r.dateGenerated); } },
+      { key: 'generatedBy', label: 'Generated By', sortable: true,
+        render: function(r) { return '<a href="#">' + r.generatedBy + '</a>'; } },
+      { key: 'status', label: 'Status', sortable: true,
+        render: function(r) { return statusBadge(r.status); } },
+      { key: '_actions', label: '', sortable: false,
+        render: function(r) { return '<i class="ms-Icon ms-Icon--View" style="cursor:pointer;margin-right:8px;" title="View"></i><i class="ms-Icon ms-Icon--Download" style="cursor:pointer;" title="Download"></i>'; } }
+    ]
+  });
+}
+
+/* Call history sub-grid */
+if (calls.length) {
+  initTable('calls-history-table', {
+    data: calls,
+    columns: [
+      { key: 'subject', label: 'Subject', sortable: true },
+      { key: 'from', label: 'From', sortable: true },
+      { key: 'category', label: 'Category', sortable: true },
+      { key: 'dateCreated', label: 'Date Created', sortable: true,
+        render: function(c) { return formatDate(c.dateCreated); } },
+      { key: 'status', label: 'Status', sortable: true,
+        render: function(c) { return statusBadge(c.status); } }
+    ]
+  });
+}
+
+/* Check tab param */
+var tabParam = getParam('tab');
+if (tabParam) {
+  var tabBtn = document.querySelector('[data-tab="' + tabParam + '"]');
+  if (tabBtn) tabBtn.click();
+}
+
+/* ── AI Report Generation Modal ── */
+function openGenerateModal() {
+  var body = '<div id="gen-form">' +
+    '<div style="margin-bottom:16px;"><label style="font-size:13px;font-weight:600;display:block;margin-bottom:4px;">Report Type</label>' +
+    '<select class="d365-select" id="gen-type" style="width:100%;"><option>Quarterly Feedback</option><option>Compliance Review</option><option>Site Visit</option></select></div>' +
+    '<div style="margin-bottom:16px;"><label style="font-size:13px;font-weight:600;display:block;margin-bottom:4px;">Reporting Period</label>' +
+    '<select class="d365-select" id="gen-period" style="width:100%;"><option>Q3 2026 (Jul - Sep)</option><option>Q2 2026 (Apr - Jun)</option><option>Q1 2026 (Jan - Mar)</option></select></div>' +
+    '<div style="margin-bottom:16px;"><label style="font-size:13px;font-weight:600;display:block;margin-bottom:8px;">Programs</label>' +
+    '<label style="display:block;margin-bottom:6px;"><input type="checkbox" checked> RHRP</label>' +
+    '<label style="display:block;margin-bottom:6px;"><input type="checkbox" checked> MDE</label>' +
+    '<label style="display:block;"><input type="checkbox"> FOH</label></div>' +
+  '</div>';
+  var footer = '<button class="d365-btn" onclick="closeModal(document.querySelector(\'.d365-modal-overlay\'))">Cancel</button>' +
+    '<button class="d365-btn d365-btn--primary" onclick="startGenerate()">Generate</button>';
+  showModal('Generate Quarterly Report', body, { footer: footer });
+}
+
+var aiSteps = [
+  'Gathering provider performance data...',
+  'Analyzing metrics across programs...',
+  'Generating AI commentary and recommendations...',
+  'Compiling final report card...'
+];
+
+function startGenerate() {
+  var overlay = document.querySelector('.d365-modal-overlay');
+  var modalBody = overlay.querySelector('.d365-modal__body');
+  var modalFooter = overlay.querySelector('.d365-modal__footer');
+  modalFooter.style.display = 'none';
+  overlay.querySelector('.d365-modal__title').textContent = 'Generating Report...';
+
+  modalBody.innerHTML = '<div class="d365-ai-progress" id="ai-progress">' +
+    aiSteps.map(function(s, i) {
+      return '<div class="d365-ai-step" id="ai-step-' + i + '">' +
+        '<div class="d365-ai-step__icon">' + (i + 1) + '</div>' +
+        '<span>' + s + '</span></div>';
+    }).join('') +
+  '</div>';
+
+  runAiSteps(0, overlay);
+}
+
+function runAiSteps(idx, overlay) {
+  if (idx >= aiSteps.length) {
+    setTimeout(function() { showGenerateSuccess(overlay); }, 600);
+    return;
+  }
+  var step = document.getElementById('ai-step-' + idx);
+  step.classList.add('d365-ai-step--active');
+  step.querySelector('.d365-ai-step__icon').innerHTML = '<div class="d365-spinner"></div>';
+  var delay = 800 + Math.random() * 1200;
+  setTimeout(function() {
+    step.classList.remove('d365-ai-step--active');
+    step.classList.add('d365-ai-step--done');
+    step.querySelector('.d365-ai-step__icon').innerHTML = '✓';
+    runAiSteps(idx + 1, overlay);
+  }, delay);
+}
+
+function showGenerateSuccess(overlay) {
+  var modalBody = overlay.querySelector('.d365-modal__body');
+  var modalFooter = overlay.querySelector('.d365-modal__footer');
+  overlay.querySelector('.d365-modal__title').textContent = 'Report Generated';
+  modalBody.innerHTML = '<div style="text-align:center;padding:16px 0;">' +
+    '<div style="font-size:48px;color:#0E7A0D;margin-bottom:12px;">✓</div>' +
+    '<p style="font-size:16px;font-weight:600;margin-bottom:8px;">Report generated successfully!</p>' +
+    '<p style="color:var(--d365-text-secondary);font-size:14px;">Your quarterly report is ready for review.</p></div>';
+  modalFooter.style.display = '';
+  modalFooter.innerHTML = '<button class="d365-btn" onclick="closeModal(document.querySelector(\'.d365-modal-overlay\'))">Close</button>' +
+    '<a class="d365-btn d365-btn--primary" href="report-card.html?id=' + providerId + '">View Report</a>';
+}
+</script>
+
+</body>
+</html>

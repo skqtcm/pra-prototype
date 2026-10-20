@@ -1,0 +1,187 @@
+- generic [ref=e10]:
+  - generic:
+    - banner [ref=e112]:
+      - link "Skip to main content" [ref=e113] [cursor=pointer]:
+        - /url: "#"
+      - button "App launcher" [ref=e116] [cursor=pointer]: 
+      - img "Leidos QTC Health Services" [ref=e117]
+      - button "UAT LQTC PRM" [ref=e118] [cursor=pointer]
+      - generic [ref=e119]:
+        - generic [aria-hidden] [ref=e121]: 
+        - searchbox "Search" [ref=e122]
+      - alert
+      - text: SANDBOX
+      - region [ref=e123]:
+        - region "Global commands" [ref=e124]:
+          - menubar "Global commands" [ref=e125]:
+            - menuitem "Assistant Stay on top of your day with notifications and insights about what's new and what's due." [ref=e126] [cursor=pointer]:
+              - generic [ref=e128]: 
+            - menuitem "New Create a new record" [ref=e130] [cursor=pointer]:
+              - generic [ref=e132]: 
+            - menuitem "Advanced Find Create advanced search queries. Press enter to open in new window." [ref=e134] [cursor=pointer]:
+              - generic [ref=e136]: 
+            - menuitem "Notifications View notifications" [ref=e138] [cursor=pointer]:
+              - generic [ref=e140]: 
+            - menuitem "Settings Set up personal options and view privacy statement." [ref=e142] [cursor=pointer]:
+              - generic [ref=e144]: 
+            - menuitem "Help Find help and training." [ref=e146] [cursor=pointer]:
+              - generic [ref=e148]: 
+        - region "Global commands" [ref=e150]:
+          - menubar "Global commands" [ref=e151]:
+            - menuitem "User Information View name of currently signed-in user." [ref=e152] [cursor=pointer]:
+              - generic [ref=e154]: 
+    - alert:
+      - generic: Some components of this app require you to sign in. If you don’t sign in, parts of the app may not work. Press Alt + B to navigate to the notification
+    - text: Some components of this app require you to sign in. If you don’t sign in, parts of the app may not work.
+    - button "Sign in" [ref=e161]
+    - button "Close" [ref=e163]:
+      - generic [ref=e164]: 
+    - navigation "Navigate Dynamics 365" [ref=e11]:
+      - button "Site Map" [expanded] [ref=e12] [cursor=pointer]:
+        - generic [ref=e13]: 
+      - tree "Navigate Dynamics 365" [ref=e15]:
+        - treeitem "Home" [ref=e16] [cursor=pointer]:
+          - generic [aria-hidden] [ref=e17]:
+            - generic [aria-hidden] [ref=e18]: 
+            - generic [ref=e19]: Home
+        - treeitem "Recent" [ref=e20] [cursor=pointer]:
+          - generic [aria-hidden] [ref=e21]:
+            - generic [aria-hidden] [ref=e22]: 
+            - generic [ref=e23]: Recent
+          - generic [ref=e25]: 
+        - treeitem "Pinned" [ref=e26] [cursor=pointer]:
+          - generic [aria-hidden] [ref=e27]:
+            - generic [aria-hidden] [ref=e28]: 
+            - generic [ref=e29]: Pinned
+          - generic [ref=e31]: 
+        - treeitem "Dashboards & Activities" [expanded] [ref=e32] [cursor=pointer]:
+          - generic [ref=e34]: Dashboards & Activities
+          - generic [ref=e36]: 
+          - group "Dashboards & Activities" [ref=e37]:
+            - treeitem "Dashboards" [ref=e38]:
+              - generic [aria-hidden] [ref=e39]:
+                - generic [aria-hidden] [ref=e40]: 
+                - generic [ref=e41]: Dashboards
+            - treeitem "Tracking Tool Link" [ref=e42]:
+              - generic [aria-hidden] [ref=e43]:
+                - generic [aria-hidden] [ref=e44]: 
+                - generic [ref=e45]: Tracking Tool Link
+            - treeitem "My Phone Calls" [ref=e46]:
+              - generic [aria-hidden] [ref=e47]:
+                - generic [aria-hidden] [ref=e48]: 
+                - generic [ref=e49]: My Phone Calls
+            - treeitem "All Activites" [ref=e50]:
+              - generic [ref=e56]: All Activites
+            - treeitem "PRA Calls" [selected] [ref=e57]:
+              - generic [ref=e62]: PRA Calls
+            - treeitem "PR Tasks" [ref=e63]:
+              - generic [ref=e68]: PR Tasks
+            - treeitem "Q-T-C Activity Trackers" [ref=e69]:
+              - generic [ref=e73]: Q-T-C Activity Trackers
+            - treeitem "TPL Phone Calls" [ref=e74]:
+              - generic [ref=e83]: TPL Phone Calls
+        - treeitem "Provider Related" [ref=e84] [cursor=pointer]:
+          - generic [ref=e86]: Provider Related
+          - generic [ref=e88]: 
+        - treeitem "Requests/Tickets" [ref=e89] [cursor=pointer]:
+          - generic [ref=e91]: Requests/Tickets
+          - generic [ref=e93]: 
+        - treeitem "Collateral" [ref=e94] [cursor=pointer]:
+          - generic [ref=e96]: Collateral
+          - generic [ref=e98]: 
+        - treeitem "Work" [ref=e99] [cursor=pointer]:
+          - generic [ref=e101]: Work
+          - generic [ref=e103]: 
+        - treeitem "Reporting" [ref=e104] [cursor=pointer]:
+          - generic [ref=e106]: Reporting
+          - generic [ref=e108]: 
+      - button "Workplace (change area)" [ref=e109] [cursor=pointer]:
+        - text: W
+        - generic [ref=e110]: Workplace
+        - generic [ref=e111]: 
+    - main [ref=e166]:
+      - form [ref=e1256]:
+        - alert:
+          - generic: "Read-only: You don't have access to edit this record. Press Alt + B to navigate to the notification"
+        - text: "Read-only: You don't have access to edit this record."
+        - button "Press Enter to go back." [ref=e1262] [cursor=pointer]: 
+        - separator [ref=e1263]
+        - button "Record set navigator" [ref=e1264]
+        - separator [ref=e1268]
+        - link "Open in new window" [ref=e1269]
+        - separator [ref=e1273]
+        - region "Commands" [ref=e1274]:
+          - menubar "Commands" [ref=e1275]:
+            - menuitem "Refresh" [ref=e1276] [cursor=pointer]:
+              - generic [ref=e1280]: Refresh
+            - menuitem "Check Access" [ref=e1281] [cursor=pointer]:
+              - generic [ref=e1285]: Check Access
+            - menuitem "Add to Queue Add these PRA Calls to a queue." [ref=e1286] [cursor=pointer]:
+              - generic [ref=e1290]: Add to Queue
+            - menuitem "Run Flow Run a flow for this PRA Call." [ref=e1291] [cursor=pointer]:
+              - generic [ref=e1295]: Flow
+              - generic [ref=e1297]: 
+            - menuitem "Run Report Select a report to run. Run reports on records you select or on all records." [ref=e1298] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e1299]:
+                - generic [ref=e1300]: 
+                - generic [ref=e1302]: Run Report
+              - generic [ref=e1304]: 
+        - button "Share" [ref=e1305]
+        - heading "#108659 Tiffany Townsend NP, NY" [level=1] [ref=e1312]
+        - status "Save status - Saved" [ref=e1313]: "- Saved"
+        - generic [ref=e1314]: PRA Call
+        - generic [ref=e1315]:
+          - generic [ref=e1316]:
+            - generic [ref=e1317]: Keri Williams
+            - generic: Completed By
+          - generic [ref=e1321]:
+            - generic [ref=e1322]: Completed
+            - generic: Activity Status
+          - generic [ref=e1326]:
+            - link "Keri Williams" [ref=e1328] [cursor=pointer]:
+              - /url: https://prmuat.crm.microsoftdynamics.us/main.aspx?appid=9503589b-2a3a-eb11-a813-0022481e482b&forceUCI=1&pagetype=entityrecord&etn=systemuser&id=897a3f43-3904-ec11-94ef-00224826a9ed
+            - generic: Owner
+        - button "More Header Editable Fields" [ref=e1330]:
+          - generic [ref=e1331] [cursor=pointer]: 
+        - tablist "PRA Call Form" [ref=e1332]:
+          - tab "Call Information Section" [active] [selected] [ref=e1333] [cursor=pointer]
+          - tab "PRA Actions" [ref=e1335] [cursor=pointer]
+          - tab "Sub-Grids" [ref=e1336] [cursor=pointer]
+          - tab "Notes & Attachments" [ref=e1337] [cursor=pointer]
+          - tab "Administration" [ref=e1338] [cursor=pointer]
+          - tab "Related" [ref=e1339] [cursor=pointer]:
+            - text: Related
+            - generic [ref=e1340]: 
+        - tabpanel "Call Information Section" [ref=e1341]:
+          - region "Call Info" [ref=e1342]:
+            - heading "Call Info" [level=2] [ref=e1343]
+            - text: 
+            - generic [ref=e1344]: Subject
+            - textbox "Subject" [ref=e1348]:
+              - /placeholder: "---"
+              - text: "#108659 Tiffany Townsend NP, NY"
+            - text: 
+            - generic [ref=e1350]: To
+            - list "To" [ref=e1351]:
+              - listitem [ref=e1352]:
+                - generic [ref=e1354]: 
+                - link "TIFFANY TOWNSEND, Readonly" [ref=e1355] [cursor=pointer]: TIFFANY TOWNSEND
+            - status [ref=e1356]
+            - text: 
+            - generic [ref=e1358]: From
+            - list "From" [ref=e1359]:
+              - listitem [ref=e1360]:
+                - generic [ref=e1362]: 
+                - link "Keri Williams, Readonly" [ref=e1363] [cursor=pointer]: Keri Williams
+            - status [ref=e1364]
+            - text: 
+            - generic [ref=e1366]: PRA Interaction Categories
+            - textbox "PRA Interaction Categories" [ref=e1370]
+          - region "Provider Info" [ref=e1372]:
+            - heading "Provider Info" [level=2] [ref=e1373]
+            - generic [ref=e1374]: Provider Name
+            - generic [aria-hidden] [ref=e1375]: "*"
+            - status [ref=e1376]
+            - text: 
+            - generic [ref=e1378]: Linked Provider Request Form
+            - status [ref=e1379]

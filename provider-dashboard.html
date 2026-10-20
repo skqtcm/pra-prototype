@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRM — Provider Dashboard (D365 Prototype)</title>
+  <link rel="stylesheet" href="d365-ui-kit.css">
+  <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css">
+  <style>
+    .ms-Icon { font-size: 16px; }
+    .d365-header__action-btn .ms-Icon { font-size: 16px; line-height: 1; }
+    .d365-command-bar__btn .ms-Icon { font-size: 16px; line-height: 1; vertical-align: middle; }
+  </style>
+</head>
+<body>
+
+<div class="d365-app" id="app"></div>
+
+<script src="js/pra-data.js"></script>
+<script src="js/d365-app.js"></script>
+<script src="js/pra-charts.js"></script>
+<script>
+var providerId = getParam('id') || '214577';
+var provider = getProvider(providerId);
+if (!provider) { document.body.innerHTML = '<p>Provider not found.</p>'; throw new Error('Not found'); }
+var metrics = PRA_DATA.metrics[providerId];
+if (!metrics) { document.body.innerHTML = '<p>No metrics data for this provider.</p>'; throw new Error('No metrics'); }
+var monthLabels = ['Apr','May','Jun','Jul','Aug','Sep'];
+
+renderShell('provider-dashboard');
+
+var main = document.getElementById('main-content');
+main.innerHTML = `
+  <!-- Command Bar -->
+  <div class="d365-command-bar">
+    <button class="d365-command-bar__btn" onclick="history.back()"><i class="ms-Icon ms-Icon--Back"></i></button>
+    <div class="d365-command-bar__divider"></div>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Refresh"></i> Refresh</button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Download"></i> Export</button>
+    <div class="d365-command-bar__divider"></div>
+    <a class="d365-command-bar__btn" href="report-card.html?id=${providerId}"><i class="ms-Icon ms-Icon--ReportDocument"></i> Full Scorecard</a>
+    <a class="d365-command-bar__btn" href="provider-detail.html?id=${providerId}"><i class="ms-Icon ms-Icon--ContactInfo"></i> Provider Detail</a>
+    <div class="d365-command-bar__spacer"></div>
+    <button class="d365-command-bar__btn d365-command-bar__btn--share"><i class="ms-Icon ms-Icon--Share"></i> Share</button>
+  </div>
+
+  <!-- Page Header -->
+  <div class="d365-view-header d365-view-header--standalone" style="flex-direction:column;align-items:flex-start;gap:2px;">
+    <div class="d365-view-header__title">Provider Performance Dashboard</div>
+    <div style="font-size:var(--d365-font-size-base);color:var(--d365-text-secondary);">
+      ${titleCase(provider.name)} &middot; ID ${provider.id} &middot; ${provider.city}, ${provider.state} &middot; ${provider.corporate}
+    </div>
+  </div>
+
+  <div class="d365-content-scroll">
+    <!-- KPI Bar -->
+    <div class="d365-kpi-bar">
+      <div class="d365-kpi-card">
+        <div class="d365-kpi-card__label">As of</div>
+        <div class="d365-kpi-card__value" style="font-size:18px;">${metrics.asOf}</div>
+        <div class="d365-kpi-card__sub">${metrics.dataRefresh}</div>
+      </div>
+      <div class="d365-kpi-card">
+        <div class="d365-kpi-card__label">Current Volume</div>
+        <div class="d365-kpi-card__value">${metrics.volume.current} <span style="font-size:14px;font-weight:400;">${metrics.volume.label}</span></div>
+        <div class="d365-kpi-card__sub">${metrics.volume.weekCompleted} completed this week <span class="d365-trend-up">${metrics.volume.weekTrend > 0 ? '▲' : '▼'} ${Math.abs(metrics.volume.weekTrend)}%</span></div>
+      </div>
+      <div class="d365-kpi-card">
+        <div class="d365-kpi-card__label">Open Items</div>
+        <div class="d365-kpi-card__value">${metrics.openItems.count} <span style="font-size:14px;font-weight:400;">pending</span></div>
+        <div class="d365-kpi-card__sub">${metrics.openItems.dueWithin5} due within 5 days</div>
+      </div>
+      <div class="d365-kpi-card">
+        <div class="d365-kpi-card__label">Last Contact</div>
+        <div class="d365-kpi-card__value" style="font-size:18px;">${metrics.lastContact.date}</div>
+        <div class="d365-kpi-card__sub">${metrics.lastContact.label}</div>
+      </div>
+    </div>
+
+    <!-- At a Glance -->
+    <div class="d365-dash-section-title">At a Glance</div>
+    <div class="d365-dash-glance">
+      <div class="d365-dash-glance-card" style="text-align:left;">
+        <div class="d365-kpi-card__label" style="margin-bottom:16px;">Overall Score</div>
+        <div style="display:flex;align-items:baseline;gap:12px;">
+          <span class="d365-metric-score">${provider.overallScore}<span class="sm">%</span></span>
+          <span class="d365-metric-trend">${trendArrow(provider.scoreTrend)} vs last month</span>
+          <span>${metricStatusBadge('on_target')}</span>
+        </div>
+        <div id="overall-bar" style="margin-top:16px;"></div>
+        <p style="font-size:13px;color:var(--d365-text-secondary);margin-top:12px;">
+          Overall score is the weighted average of all program scores. Score of 80+ is considered "On Target."
+        </p>
+      </div>
+    </div>
+
+    <!-- Program Scores -->
+    <div class="d365-dash-section-title">Program Scores <span class="sub">— averaged to produce the Overall Score</span></div>
+    <div class="d365-dash-grid">
+      ${Object.keys(metrics.programs).map(function(key) {
+        var p = metrics.programs[key];
+        return '<div class="d365-metric-card">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+          '<span class="d365-kpi-card__label" style="font-weight:600;">' + key + '</span>' +
+          metricStatusBadge(p.status) +
+          '</div>' +
+          '<div class="d365-metric-value-row">' +
+          '<div>' +
+          '<div class="d365-metric-score" style="margin-top:8px;">' + p.score + '<span class="sm">%</span></div>' +
+          '<div class="d365-metric-trend">' + trendArrow(p.trend) + '</div>' +
+          '</div>' +
+          '<div id="spark-' + key + '" style="flex:1;text-align:right;"></div>' +
+          '</div>' +
+          '</div>';
+      }).join('')}
+    </div>
+    <div class="d365-dash-formula">
+      ${Object.keys(metrics.programs).map(function(key) { return key + ' (' + metrics.programs[key].score + '%)'; }).join(' + ')}
+      averaged = Overall Score of ${provider.overallScore}%.
+    </div>
+
+    <!-- Performance Metrics -->
+    <div class="d365-dash-section-title">Performance Metrics <span class="sub">— 6-month trend</span></div>
+    <div class="d365-dash-grid d365-dash-grid--3">
+      ${['timeliness','quality','customerService'].map(function(key) {
+        var m = metrics.performance[key];
+        var label = key === 'customerService' ? 'Customer Service' : key.charAt(0).toUpperCase() + key.slice(1);
+        return '<div class="d365-metric-card">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+          '<span class="d365-kpi-card__label" style="font-weight:600;">' + label + '</span>' +
+          metricStatusBadge(m.status) +
+          '</div>' +
+          '<div class="d365-metric-score" style="margin-top:4px;">' + m.score + '<span class="sm">%</span></div>' +
+          '<div class="d365-metric-trend">' + trendArrow(m.trend) + '</div>' +
+          '<div id="line-' + key + '" style="margin-top:4px;"></div>' +
+          '</div>';
+      }).join('')}
+    </div>
+
+    <!-- Additional Criteria -->
+    <div class="d365-dash-section-title">Additional Performance Criteria</div>
+    <div class="d365-dash-grid d365-dash-grid--3">
+      ${Object.keys(metrics.criteria).map(function(key) {
+        var c = metrics.criteria[key];
+        return '<div class="d365-metric-card">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">' +
+          '<span class="d365-kpi-card__label" style="font-weight:600;">' + c.label + '</span>' +
+          metricStatusBadge(c.status) +
+          '</div>' +
+          '<div class="d365-metric-value-row">' +
+          '<div>' +
+          '<span class="d365-metric-score" style="font-size:24px;">' + c.score + '<span class="sm">%</span></span>' +
+          '<div class="d365-metric-trend" style="font-size:12px;">' + trendArrow(c.trend) + '</div>' +
+          '</div>' +
+          '<div id="crit-' + key + '" style="flex:1;text-align:right;"></div>' +
+          '</div>' +
+          '</div>';
+      }).join('')}
+    </div>
+  </div><!-- /d365-content-scroll -->
+`;
+
+requestAnimationFrame(function() {
+  renderProgressBar('overall-bar', provider.overallScore, 100, { height: 10, color: '#115EA3' });
+
+  Object.keys(metrics.programs).forEach(function(key) {
+    var pColor = key === 'RHRP' ? '#115EA3' : '#7C3AED';
+    renderSparkline('spark-' + key, metrics.programs[key].history, { color: pColor, width: 160, height: 48 });
+  });
+
+  ['timeliness','quality','customerService'].forEach(function(key) {
+    renderLineChart('line-' + key, metrics.performance[key].history, { labels: monthLabels, height: 180, labelSize: 13 });
+  });
+
+  Object.keys(metrics.criteria).forEach(function(key) {
+    var c = metrics.criteria[key];
+    var cColor = c.status === 'watch' ? '#F59E0B' : c.status === 'at_risk' ? '#A4262C' : '#115EA3';
+    renderSparkline('crit-' + key, c.history, { color: cColor, width: 140, height: 44 });
+  });
+});
+</script>
+
+</body>
+</html>

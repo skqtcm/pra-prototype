@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRM — Call Queue (D365 Prototype)</title>
+  <link rel="stylesheet" href="d365-ui-kit.css">
+  <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css">
+  <style>
+    .ms-Icon { font-size: 16px; }
+    .d365-header__action-btn .ms-Icon { font-size: 16px; line-height: 1; }
+    .d365-command-bar__btn .ms-Icon { font-size: 16px; line-height: 1; vertical-align: middle; }
+    .d365-btn-start { display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; background: var(--d365-link); color: #fff; border: none; border-radius: var(--d365-radius-md); font-size: 12px; font-weight: 600; cursor: pointer; font-family: var(--d365-font); }
+    .d365-btn-start:hover { background: #0F548C; }
+  </style>
+</head>
+<body>
+
+<div class="d365-app" id="app"></div>
+
+<script src="js/pra-data.js"></script>
+<script src="js/d365-app.js"></script>
+<script>
+renderShell('call-queue');
+
+var main = document.getElementById('main-content');
+main.innerHTML = `
+  <div class="d365-command-bar">
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Back"></i></button>
+    <div class="d365-command-bar__divider"></div>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--Refresh"></i> Refresh</button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--SortLines"></i> Sort by Priority</button>
+    <button class="d365-command-bar__btn"><i class="ms-Icon ms-Icon--More"></i></button>
+    <div class="d365-command-bar__spacer"></div>
+    <button class="d365-command-bar__btn d365-command-bar__btn--share"><i class="ms-Icon ms-Icon--Share"></i> Share</button>
+  </div>
+
+  <div class="d365-view-card">
+    <div class="d365-view-header">
+      <div class="d365-view-header__title">
+        PRA Call Queue
+        <span class="d365-view-header__chevron"><span style="font-family:FabricMDL2Icons;font-size:16px;">&#xe70d;</span></span>
+      </div>
+      <div class="d365-view-header__actions">
+        <button class="d365-view-header__action"><i class="ms-Icon ms-Icon--TripleColumn"></i> Edit columns</button>
+        <button class="d365-view-header__action"><i class="ms-Icon ms-Icon--Filter"></i> Edit filters</button>
+      </div>
+    </div>
+
+    <div class="d365-toolbar">
+      <div class="d365-toolbar__search">
+        <input type="text" id="queue-search" placeholder="Search queue...">
+      </div>
+      <select class="d365-select" id="filter-queue-status">
+        <option value="All">Status: All</option>
+        <option value="Open">Open</option>
+        <option value="Overdue">Overdue</option>
+      </select>
+      <select class="d365-select" id="filter-queue-priority">
+        <option value="All">Priority: All</option>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
+      <div class="d365-toolbar__spacer"></div>
+      <span class="d365-toolbar__count"></span>
+    </div>
+
+    <div class="d365-grid">
+      <table id="queue-table">
+        <thead><tr></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="d365-grid__footer">
+      <span class="d365-grid__row-count">Rows: ${PRA_DATA.callQueue.length}</span>
+      <div class="d365-grid__pagination">
+        <button disabled>⟨⟨</button><button disabled>⟨</button>
+        <span>Page 1</span>
+        <button disabled>⟩</button><button disabled>⟩⟩</button>
+      </div>
+    </div>
+  </div>
+`;
+
+var priorityOrder = { High: 1, Medium: 2, Low: 3 };
+var sortedQueue = PRA_DATA.callQueue.slice().sort(function(a, b) {
+  return (priorityOrder[a.priority] || 9) - (priorityOrder[b.priority] || 9);
+});
+
+initTable('queue-table', {
+  data: sortedQueue,
+  columns: [
+    { key: 'priority', label: 'Priority', sortable: true,
+      render: function(row) { return priorityIcon(row.priority); } },
+    { key: 'providerName', label: 'Provider', sortable: true,
+      render: function(row) { return '<a href="provider-detail.html?id=' + row.providerId + '">' + titleCase(row.providerName) + '</a>'; } },
+    { key: 'type', label: 'Type', sortable: true },
+    { key: 'dueDate', label: 'Due Date', sortable: true,
+      render: function(row) { return dueCountdown(row.dueDate); } },
+    { key: 'status', label: 'Status', sortable: true,
+      render: function(row) { return statusBadge(computedStatus(row)); } },
+    { key: '_actions', label: 'Actions', sortable: false,
+      render: function(row) {
+        return computedStatus(row) !== 'Completed'
+          ? '<button class="d365-btn-start" onclick="window.location.href=\'provider-detail.html?id=' + row.providerId + '&tab=call-info\'"><i class="ms-Icon ms-Icon--Phone" style="font-size:12px"></i> Start Call</button>'
+          : '';
+      } }
+  ],
+  searchInputId: 'queue-search',
+  filters: [
+    { id: 'filter-queue-status', key: 'status', fn: function(row, val) { return computedStatus(row) === val; } },
+    { id: 'filter-queue-priority', key: 'priority' }
+  ],
+  rowClass: function(row) {
+    return computedStatus(row) === 'Overdue' ? 'd365-row--overdue' : '';
+  }
+});
+</script>
+
+</body>
+</html>

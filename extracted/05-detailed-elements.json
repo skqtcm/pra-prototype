@@ -1,0 +1,109 @@
+{
+  "viewTitleText": {
+    "tag": "SPAN",
+    "text": "All PRA Calls",
+    "className": "ms-Button-textContainer textContainer-156",
+    "backgroundColor": "rgba(0, 0, 0, 0)",
+    "color": "rgb(36, 36, 36)",
+    "fontSize": "20px",
+    "fontWeight": "400",
+    "lineHeight": "normal",
+    "padding": "0px",
+    "height": "28px",
+    "width": "122.375px",
+    "letterSpacing": "normal"
+  },
+  "viewTitleContainer": {
+    "tag": "SPAN",
+    "text": "All PRA CallsOpen popup to change view.",
+    "className": "ms-Button-flexContainer flexContainer-142",
+    "backgroundColor": "rgba(0, 0, 0, 0)",
+    "color": "rgb(36, 36, 36)",
+    "fontSize": "20px",
+    "fontWeight": "400",
+    "lineHeight": "normal",
+    "padding": "0px",
+    "height": "28px",
+    "width": "142.375px",
+    "borderBottom": "0px none rgb(36, 36, 36)",
+    "cursor": "pointer"
+  },
+  "entityName": {
+    "tag": "SPAN",
+    "text": "PRA Calls",
+    "className": "pa-gj pa-w pa-gk pa-gl pa-gm pa-cg pa-bf pa-ch pa-bt ",
+    "backgroundColor": "rgba(0, 0, 0, 0)",
+    "color": "rgb(36, 36, 36)",
+    "fontSize": "14px",
+    "fontWeight": "400",
+    "lineHeight": "normal",
+    "padding": "0px",
+    "height": "18.6667px",
+    "width": "57.5938px",
+    "letterSpacing": "normal"
+  },
+  "gridRowBorders": {
+    "borderBottom": "0px none rgb(0, 0, 0)",
+    "borderTop": "0px none rgb(0, 0, 0)",
+    "outline": "rgb(0, 0, 0) none 0px"
+  },
+  "gridCellBorders": {
+    "borderBottom": "0px none rgb(0, 0, 0)",
+    "borderRight": "0px none rgb(0, 0, 0)",
+    "borderLeft": "0px none rgba(0, 0, 0, 0)"
+  },
+  "gridBodyViewport": {
+    "tag": "DIV",
+    "text": "JAMSHID TAMIRYJAMSHID TAMIRYLori FloydLori Floyd8/31/2026 6:05 PM8/31/2026 6:05",
+    "className": "ag-body-viewport ag-row-no-animation ag-layout-normal",
+    "backgroundColor": "rgba(0, 0, 0, 0)",
+    "color": "rgb(0, 0, 0)",
+    "fontSize": "12px",
+    "fontWeight": "400",
+    "lineHeight": "normal",
+    "padding": "0px",
+    "height": "173.323px",
+    "width": "984.667px",
+    "borderTop": "0px none rgb(0, 0, 0)",
+    "borderBottom": "0px none rgb(0, 0, 0)",
+    "overflow": "hidden auto"
+  },
+  "activeNavItemInner": {
+    "tag": "SPAN",
+    "text": "",
+    "className": "pa-ey pa-fv pa-eo pa-gi pa-cf pa-el pa-g pa-w pa-cx svgIcon ",
+    "backgroundColor": "rgba(0, 0, 0, 0)",
+    "color": "rgb(36, 36, 36)",
+    "fontSize": "16px",
+    "fontWeight": "400",
+    "lineHeight": "normal",
+    "padding": "0px",
+    "height": "16px",
+    "width": "16px",
+    "borderLeft": "0px none rgb(36, 36, 36)",
+    "textDecoration": "none"
+  },
+  "activeNavItemBorder": {
+    "borderLeft": "0px none rgb(36, 36, 36)",
+    "outline": "rgb(36, 36, 36) none 2.66667px",
+    "boxShadow": "none"
+  },
+  "_sitemapGroupCount": 0,
+  "searchContainer": {
+    "tag": "DIV",
+    "text": "",
+    "className": "ms-SearchBox id-global-search-searchbox-root-1 root-135",
+    "backgroundColor": "rgba(255, 255, 255, 0.78)",
+    "color": "rgb(36, 36, 36)",
+    "fontSize": "14px",
+    "fontWeight": "400",
+    "lineHeight": "normal",
+    "padding": "1px 0px 1px 4px",
+    "height": "32px",
+    "width": "466.24px",
+    "borderBottom": "0.666667px solid rgb(97, 97, 97)",
+    "borderRadius": "2px",
+    "border": "0.666667px solid rgb(97, 97, 97)",
+    "boxShadow": "none"
+  }
+}
